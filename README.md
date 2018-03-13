@@ -1,24 +1,8 @@
-# README
+# ET API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Experiment - DO NOT USE
 
-Things you may want to cover:
+## Introduction
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+At the moment, this is an exploratory application that will replace the
+JADU system.
