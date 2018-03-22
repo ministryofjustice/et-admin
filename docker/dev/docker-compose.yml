@@ -1,0 +1,21 @@
+version: '3'
+services:
+  dev:
+    build:
+      context: .
+    links:
+      - db
+    environment:
+      RAILS_ENV:
+      DB_HOST: db
+      DB_USERNAME: postgres
+      BUNDLE_WITHOUT: production
+    volumes:
+      - ../..:/app
+      - rubygems_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres:9.3.5
+volumes:
+  rubygems_cache:
