@@ -1,4 +1,4 @@
-ActiveAdmin.register AdminUser do
+ActiveAdmin.register Admin::User, as: 'User' do
   permit_params :email, :password, :password_confirmation
 
   index do
@@ -21,6 +21,7 @@ ActiveAdmin.register AdminUser do
       f.input :email
       f.input :password
       f.input :password_confirmation
+      f.input :role_ids, as: :selected_list, label: 'Roles'
     end
     f.actions
   end

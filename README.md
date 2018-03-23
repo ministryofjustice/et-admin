@@ -106,6 +106,14 @@ The default admin details are that provided by activeadmin which are
 username: admin@example.com
 password: password
 
+Or there are 2 more users to demonstrate the users and roles system
+
+username: senioruser@example.com
+password: password
+
+username: junioruser@example.com
+password: password
+
 These details are setup in the seed data
 
 # Developing And Testing Without Docker
