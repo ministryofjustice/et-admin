@@ -29,7 +29,7 @@ junior_role = Admin::Role.find_or_create_by!(name: 'junior') do |role|
 end
 
 
-if Rails.env.development?
+if Rails.env.development? || ENV.fetch('SEED_EXAMPLE_USERS', 'false') == 'true'
   Admin::User.find_or_create_by!(email: 'admin@example.com') do |user|
     user.password = 'password'
     user.password_confirmation = 'password'
