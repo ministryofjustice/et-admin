@@ -1,4 +1,4 @@
-ActiveAdmin.register Admin::Permission do
+ActiveAdmin.register Admin::Permission, as: 'Permissions' do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #

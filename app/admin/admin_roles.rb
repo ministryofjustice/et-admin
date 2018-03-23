@@ -1,4 +1,4 @@
-ActiveAdmin.register Admin::Role do
+ActiveAdmin.register Admin::Role, as: 'Roles' do
   permit_params :name, :is_admin
 
   index do
