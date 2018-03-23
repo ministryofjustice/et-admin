@@ -21,6 +21,7 @@ ActiveAdmin.register Admin::User, as: 'User' do
       f.input :email
       f.input :password
       f.input :password_confirmation
+      f.input :role_ids, as: :selected_list, label: 'Roles'
     end
     f.actions
   end

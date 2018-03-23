@@ -13,5 +13,9 @@ module Admin
     def show?
       true
     end
+
+    def update?
+      user.roles.any?(&:is_admin?)
+    end
   end
 end
