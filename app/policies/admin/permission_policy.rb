@@ -1,16 +1,16 @@
 module Admin
-  class RolePolicy < ApplicationPolicy
+  class PermissionPolicy < ApplicationPolicy
     class Scope < Struct.new(:user, :scope)
       def resolve
         scope
       end
     end
 
-    def show?
+    def index?
       true
     end
 
-    def index?
+    def show?
       true
     end
   end
