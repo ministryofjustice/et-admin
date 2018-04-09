@@ -13,5 +13,9 @@ module Admin
     def index?
       true
     end
+
+    def update?
+      user.is_admin?
+    end
   end
 end

@@ -1,7 +1,7 @@
 module Admin
   class UserPolicy < ApplicationPolicy
     def index?
-      user.roles.any?(&:is_admin?)
+      user.is_admin?
     end
 
     class Scope < Struct.new(:user, :scope)
@@ -15,7 +15,7 @@ module Admin
     end
 
     def update?
-      user.roles.any?(&:is_admin?)
+      user.is_admin?
     end
   end
 end
