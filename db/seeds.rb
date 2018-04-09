@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 controlled_resources = [:offices, :jobs]
-permissions = [:create, :read, :update, :delete].product(controlled_resources).map {|pair| pair.join('_')}
+permissions = [:create, :read, :update, :delete].product(controlled_resources).map {|pair| pair.join('_')}.sort
 
 permissions.each do |p|
   Admin::Permission.find_or_create_by! name: p
