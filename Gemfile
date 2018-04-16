@@ -53,6 +53,7 @@ gem 'devise', '~> 4.4'
 gem 'activeadmin', '~> 1.2'
 gem 'activeadmin_addons', '~> 1.4'
 gem 'pundit', '~> 1.1'
+gem 'httparty', '~> 0.16.2'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
