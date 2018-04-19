@@ -22,6 +22,7 @@ ActiveAdmin.register Admin::AtosFile, as: 'AtosFiles' do
     tmp_file = Tempfile.new
     tmp_file.binmode
     resource.download to: tmp_file
+    tmp_file.rewind
     send_file tmp_file, filename: resource.id
   end
 
