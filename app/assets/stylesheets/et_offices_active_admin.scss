@@ -1,0 +1,11 @@
+#index_table_et_offices {
+  .bool-value {
+    &.true-value {
+      color: #08A510;
+    }
+  }
+
+  .col-code, .col-default {
+    text-align: center;
+  }
+}
