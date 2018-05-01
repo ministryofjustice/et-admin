@@ -1,5 +1,5 @@
 module Admin
-  class OfficePolicy < ApplicationPolicy
+  class OfficePostCodePolicy < ApplicationPolicy
     def index?
       true
     end
