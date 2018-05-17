@@ -1,5 +1,5 @@
 module Admin
-  class ClaimExportPolicy < ApplicationPolicy
+  class ExportPolicy < ApplicationPolicy
     class Scope < Struct.new(:user, :scope)
       def resolve
         scope
