@@ -45,7 +45,7 @@ module Admin
       def file_names
         @response ||= begin
           response = HTTParty.get("#{base_url}/v1/filetransfer/list")
-          response.body.lines.map do |line|
+          response.body.lines.reverse.map do |line|
             AtosFile.new(id: line.strip)
           end
         end
