@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-controlled_resources = [:offices, :jobs]
+controlled_resources = [:offices, :jobs, :acas]
 permissions = [:create, :read, :update, :delete].product(controlled_resources).map {|pair| pair.join('_')}.sort
 
 permissions.each do |p|
@@ -22,10 +22,12 @@ senior_role = Admin::Role.find_or_create_by!(name: 'senior') do |role|
   role.permissions << Admin::Permission.find_by(name: 'update_offices')
   role.permissions << Admin::Permission.find_by(name: 'delete_offices')
   role.permissions << Admin::Permission.find_by(name: 'create_offices')
+  role.permissions << Admin::Permission.find_by(name: 'read_acas')
 end
 
 junior_role = Admin::Role.find_or_create_by!(name: 'junior') do |role|
   role.permissions << Admin::Permission.find_by(name: 'read_offices')
+  role.permissions << Admin::Permission.find_by(name: 'read_acas')
 end
 
 

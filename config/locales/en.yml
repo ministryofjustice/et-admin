@@ -37,3 +37,26 @@ en:
           admin/office:
             is_default:
               false_value: ' '
+  activemodel:
+    attributes:
+      admin/acas_certificate_form:
+        date_of_receipt: 'ACAS first contact'
+        date_of_issue: 'ACAS conciliation closed'
+        method_of_issue: 'Certificate sent'
+        respondent_name: 'Full name'
+        claimant_name: 'Full name'
+        certificate_download: 'Certificate download'
+    errors:
+      models:
+        admin/acas_certificate_form:
+          attributes:
+            number:
+              not_found: 'No certificate returned from ACAS for %{number}'
+              invalid_certificate: 'Please enter a valid certificate number'
+              unknown_exception: 'There was a problem with the ACAS service - please try again later'
+  date:
+    formats:
+      long: "%d/%m%Y"
+  time:
+    formats:
+      long: "%d/%m/%Y %H:%M:%S"

@@ -12,6 +12,10 @@ module ActiveAdmin
         true
       when 'Jobs'
         user.is_admin? || user.permission_names.include?('read_jobs')
+      when 'Acas'
+        user.is_admin? || user.permission_names.include?('read_acas')
+      when 'Certificate Search'
+        user.is_admin? || user.permission_names.include?('read_acas')
       else
         user.is_admin?
       end
