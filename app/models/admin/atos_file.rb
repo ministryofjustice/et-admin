@@ -6,6 +6,8 @@ module Admin
       def initialize
         self._page_size = 25
         self._current_page = 1
+        self.username = Rails.configuration.et_atos_api.username
+        self.password = Rails.configuration.et_atos_api.password
       end
 
       def each(&block)
@@ -44,7 +46,7 @@ module Admin
 
       def file_names
         @response ||= begin
-          response = HTTParty.get("#{base_url}/v1/filetransfer/list")
+          response = HTTParty.get("#{base_url}/v1/filetransfer/list", basic_auth: { username: username, password: password })
           response.body.lines.reverse.map do |line|
             AtosFile.new(id: line.strip)
           end
@@ -52,7 +54,7 @@ module Admin
 
       end
 
-      attr_accessor :_page_size, :_current_page
+      attr_accessor :_page_size, :_current_page, :username, :password
     end
     include ActiveModel::Model
 
@@ -83,7 +85,7 @@ module Admin
     end
 
     def download(to:)
-      HTTParty.get("#{base_url}/v1/filetransfer/download/#{id}") do |chunk|
+      HTTParty.get("#{base_url}/v1/filetransfer/download/#{id}", basic_auth: { username: Rails.configuration.et_atos_api.username, password: Rails.configuration.et_atos_api.password }) do |chunk|
         to.write(chunk)
       end
     end

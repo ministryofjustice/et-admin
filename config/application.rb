@@ -27,5 +27,7 @@ module Super
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.et_atos_api = ::Rails::Application::Configuration::Custom.new
   end
 end

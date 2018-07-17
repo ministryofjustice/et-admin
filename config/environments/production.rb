@@ -88,4 +88,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.et_atos_api.username = ENV.fetch('ATOS_API_USERNAME')
+  config.et_atos_api.password = ENV.fetch('ATOS_API_PASSWORD')
 end
