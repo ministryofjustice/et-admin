@@ -18,7 +18,7 @@ module Admin
       user.is_admin? || user.permission_names.include?('edit_addresses')
     end
 
-    def destroy
+    def destroy?
       user.is_admin? || user.permission_names.include?('delete_addresses')
     end
   end
