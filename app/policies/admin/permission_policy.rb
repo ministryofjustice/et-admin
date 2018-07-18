@@ -18,7 +18,7 @@ module Admin
       user.is_admin?
     end
 
-    def delete?
+    def destroy?
       user.is_admin?
     end
   end

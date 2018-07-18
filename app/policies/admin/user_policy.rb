@@ -18,7 +18,7 @@ module Admin
       user.is_admin? || user.permission_names.include?('update_users')
     end
 
-    def delete?
+    def destroy?
       user.is_admin? || user.permission_names.include?('delete_users')
     end
   end
