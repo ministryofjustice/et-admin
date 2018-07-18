@@ -8,15 +8,15 @@ module Admin
     end
 
     def show?
-      true
+      user.is_admin? || user.permission_names.include?('read_atos_files')
     end
 
     def download?
-      true
+      user.is_admin? || user.permission_names.include?('read_atos_files')
     end
 
     def index?
-      true
+      user.is_admin? || user.permission_names.include?('read_atos_files')
     end
 
     def update?
@@ -24,7 +24,7 @@ module Admin
     end
 
     def destroy
-      false
+      user.is_admin? || user.permission_names.include?('delete_atos_files')
     end
   end
 
