@@ -7,15 +7,19 @@ module Admin
 
     end
     def index?
-      true
+      user.is_admin? || user.permission_names.include?('read_exported_files')
+    end
+
+    def show?
+      user.is_admin? || user.permission_names.include?('read_exported_files')
     end
 
     def update?
-      false
+      user.is_admin? || user.permission_names.include?('update_exported_files')
     end
 
     def destroy
-      false
+      user.is_admin? || user.permission_names.include?('delete_exported_files')
     end
   end
 
