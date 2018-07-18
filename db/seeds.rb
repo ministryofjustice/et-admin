@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-controlled_resources = [:offices, :jobs, :acas, :acas_download_logs, :addresses, :atos_files]
+controlled_resources = [:offices, :jobs, :acas, :acas_download_logs, :addresses, :atos_files, :claims]
 permissions = [:create, :read, :update, :delete].product(controlled_resources).map {|pair| pair.join('_')}.sort
 
 permissions.each do |p|

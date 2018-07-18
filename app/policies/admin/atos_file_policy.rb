@@ -27,5 +27,4 @@ module Admin
       user.is_admin? || user.permission_names.include?('delete_atos_files')
     end
   end
-
 end
