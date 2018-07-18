@@ -8,7 +8,7 @@
 
 controlled_resources = [:offices, :jobs, :acas, :acas_download_logs,
   :addresses, :atos_files, :claims, :claimants, :exports, :exported_files,
-  :representatives, :respondents]
+  :representatives, :respondents, :uploaded_files, :users]
 permissions = [:create, :read, :update, :delete].product(controlled_resources).map { |pair| pair.join('_') }.sort
 
 permissions.each do |p|
