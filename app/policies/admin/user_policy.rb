@@ -6,6 +6,10 @@ module Admin
       end
     end
 
+    def create?
+      user.is_admin? || user.permission_names.include?('create_users')
+    end
+
     def index?
       user.is_admin? || user.permission_names.include?('read_users')
     end
@@ -20,6 +24,10 @@ module Admin
 
     def destroy?
       user.is_admin? || user.permission_names.include?('delete_users')
+    end
+
+    def import?
+      user.is_admin? || user.permission_names.include?('import_users')
     end
   end
 end
