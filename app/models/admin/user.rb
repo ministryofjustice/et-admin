@@ -1,7 +1,6 @@
 module Admin
   class User < ApplicationRecord
     self.table_name = :admin_users
-    attribute :role_names, :string
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable,

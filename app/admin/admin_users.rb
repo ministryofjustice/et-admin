@@ -1,12 +1,9 @@
 ActiveAdmin.register Admin::User, as: 'User' do
   permit_params :email, :password, :password_confirmation
-  before_batch_import = lambda do |importer|
-    boom!
-  end
-#  active_admin_import batch_size: 3, before_batch_import: before_batch_import
 
   collection_action :import, method: :get do
     authorize!(:import, active_admin_config.resource_class)
+    @import_service = ::Admin::UsersImportService.new
     render
   end
 
@@ -23,12 +20,12 @@ ActiveAdmin.register Admin::User, as: 'User' do
     authorize!(:import, active_admin_config.resource_class)
     _params = params.respond_to?(:to_unsafe_h) ? params.to_unsafe_h : params
     params = ActiveSupport::HashWithIndifferentAccess.new _params
-    import_service = ::Admin::UsersImportService.new(tempfile: params[:user_import][:file].tempfile)
-    import_service.call
-    if import_service.errors.empty?
+    @import_service = ::Admin::UsersImportService.new(tempfile: params.dig(:admin_users_import_service, :file).try(:tempfile))
+    @import_service.call
+    if @import_service.errors.empty?
       redirect_to admin_users_path
     else
-      raise 'We had errors'
+      render :import
     end
   end
 
