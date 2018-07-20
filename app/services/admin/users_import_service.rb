@@ -33,11 +33,15 @@ module Admin
     def import_csv
       lines = tempfile.readlines("\n").map { |l| l.gsub(/\n\z/, '').gsub(/\r\z/, '') }
       rows = CSV.parse(lines.join("\n"), headers: true)
-      dups = duplicate_rows(rows)
+      dups = duplicate_emails(rows)
       if dups.present?
-        errors.add(:tempfile, "The file contains the following duplicates #{dups.join(' - ')}")
-        return
+        errors.add(:tempfile, "The file contains the following duplicate emails #{dups.join(' - ')}")
       end
+      dups = duplicate_usernames(rows)
+      if dups.present?
+        errors.add(:tempfile, "The file contains the following duplicate usernames #{dups.join(' - ')}")
+      end
+      return if errors.present?
       User.transaction do
         begin
           import_in_batches(rows)
@@ -79,9 +83,14 @@ module Admin
       batch
     end
 
-    def duplicate_rows(rows)
+    def duplicate_emails(rows)
       emails = rows.map {|r| r['email']}
       emails.select { |e| emails.count(e) > 1 }
+    end
+
+    def duplicate_usernames(rows)
+      usernames = rows.map {|r| r['username']}
+      usernames.select { |e| usernames.count(e) > 1 }
     end
 
     def role_with_name(name)
