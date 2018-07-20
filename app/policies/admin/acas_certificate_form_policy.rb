@@ -8,11 +8,11 @@ module Admin
     end
 
     def show?
-      true
+      user.is_admin? || user.permission_names.include?('read_acas')
     end
 
     def index?
-      true
+      false
     end
 
     def update?

@@ -4,18 +4,22 @@ module Admin
       def resolve
         scope
       end
-
     end
+
     def index?
-      true
+      user.is_admin? || user.permission_names.include?('read_claimants')
+    end
+
+    def show?
+      user.is_admin? || user.permission_names.include?('read_claimants')
     end
 
     def update?
-      false
+      user.is_admin? || user.permission_names.include?('update_claimants')
     end
 
     def destroy
-      false
+      user.is_admin? || user.permission_names.include?('delete_claimants')
     end
   end
 

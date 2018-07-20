@@ -12,6 +12,7 @@ module Admin
 
     before_save :cache_permissions
 
+
     private
 
     def cache_permissions(*)
