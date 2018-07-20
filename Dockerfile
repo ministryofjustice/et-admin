@@ -10,6 +10,6 @@ RUN npm install
 
 EXPOSE 8080
 
-RUN bash -c "DB_ADAPTOR=nulldb bundle exec rake assets:precompile RAILS_ENV=production"
+RUN bash -c "DB_ADAPTOR=nulldb bundle exec rake assets:precompile RAILS_ENV=production ATOS_API_USERNAME=foo ATOS_API_PASSWORD=bar"
 
 CMD ["./run.sh"]
