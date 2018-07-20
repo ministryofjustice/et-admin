@@ -1,6 +1,7 @@
 module Admin
   class User < ApplicationRecord
     self.table_name = :admin_users
+    attribute :role_names, :string
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable,
@@ -11,6 +12,7 @@ module Admin
     has_many :permissions, class_name: 'Admin::Permission', through: :roles
 
     before_save :cache_permissions
+
 
     private
 

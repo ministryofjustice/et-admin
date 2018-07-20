@@ -53,6 +53,8 @@ end
 gem 'devise', '~> 4.4'
 gem 'activeadmin', '~> 1.2'
 gem 'activeadmin_addons', '~> 1.4'
+gem 'activerecord-import', '~> 0.17'
+gem 'active_admin_import', '~> 3.1'
 gem 'pundit', '~> 1.1'
 gem 'httparty', '~> 0.16.2'
 
