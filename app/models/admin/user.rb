@@ -4,7 +4,7 @@ module Admin
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable,
-      :recoverable, :rememberable, :trackable, :validatable
+      :recoverable, :rememberable, :trackable, :validatable, :lockable, :timeoutable
 
     has_many :user_roles, class_name: 'Admin::UserRole'
     has_many :roles, class_name: 'Admin::Role', through: :user_roles
@@ -16,7 +16,7 @@ module Admin
     private
 
     def cache_permissions(*)
-      self.permission_names = roles.map(&:permission_names).flatten.uniq
+      self.permission_names = roles.map(&:permission_names).flatten.uniq.compact
       self.is_admin = roles.any?(&:is_admin?)
     end
   end
