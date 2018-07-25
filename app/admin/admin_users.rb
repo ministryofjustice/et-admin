@@ -46,6 +46,28 @@ ActiveAdmin.register Admin::User, as: 'User' do
   filter :sign_in_count
   filter :created_at
 
+  show do |user|
+    attributes_table do
+      row :email
+      row :reset_password_sent_at
+      row :remember_created_at
+      row :current_sign_in_at
+      row :last_sign_in_at
+      row :current_sign_in_ip
+      row :last_sign_in_ip
+      row :permission_names
+      row :is_admin
+      row :created_at
+      row :updated_at
+      row :username
+      row :name
+      row :department
+      row :failed_attempts
+      row :locked_at
+    end
+    active_admin_comments
+  end
+
   form do |f|
     f.inputs do
       f.input :email
