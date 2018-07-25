@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   authenticate :admin_user, -> (u) { u.is_admin? || u.permission_names.include?('read_jobs') } do |u|
     mount Sidekiq::Web => '/admin/sidekiq'
   end
+
+  get '/ping' => 'status#ping'
+  get '/healthcheck' => 'status#healthcheck'
 end
