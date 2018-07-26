@@ -46,7 +46,7 @@ module Admin
 
       def file_names
         @response ||= begin
-          response = HTTParty.get("#{base_url}/v1/filetransfer/list", basic_auth: { username: username, password: password })
+          response = HTTParty.get("#{base_url}/list", basic_auth: { username: username, password: password })
           response.body.lines.reverse.map do |line|
             AtosFile.new(id: line.strip)
           end
@@ -85,7 +85,7 @@ module Admin
     end
 
     def download(to:)
-      HTTParty.get("#{base_url}/v1/filetransfer/download/#{id}", basic_auth: { username: Rails.configuration.et_atos_api.username, password: Rails.configuration.et_atos_api.password }) do |chunk|
+      HTTParty.get("#{base_url}/download/#{id}", basic_auth: { username: Rails.configuration.et_atos_api.username, password: Rails.configuration.et_atos_api.password }) do |chunk|
         to.write(chunk)
       end
     end
