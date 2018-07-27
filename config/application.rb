@@ -11,6 +11,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
+require_relative '../lib/set_action_mailer_host'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -27,5 +28,8 @@ module Super
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.et_atos_api = ::Rails::Application::Configuration::Custom.new
+    config.middleware.insert_before Rack::Sendfile, SetActionMailerHost
   end
 end

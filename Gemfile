@@ -32,9 +32,13 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'sidekiq', '~> 5.1', '>= 5.1.3'
+gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'dotenv-rails', '~> 2.4'
 end
 
 group :development do
@@ -48,6 +52,11 @@ end
 
 gem 'devise', '~> 4.4'
 gem 'activeadmin', '~> 1.2'
+gem 'activeadmin_addons', '~> 1.4'
+gem 'activerecord-import', '~> 0.17'
+gem 'active_admin_import', '~> 3.1'
+gem 'pundit', '~> 1.1'
+gem 'httparty', '~> 0.16.2'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
