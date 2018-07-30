@@ -4,6 +4,8 @@ module Admin
 
     attr_accessor :postcode, :reference
 
+    validates :postcode, postcode: true
+
     def self.inheritance_column
       :type
     end

@@ -32,8 +32,14 @@ ActiveAdmin.register Admin::GenerateReference, as: 'Generate Reference' do
 
     def create
       postcode = params[:admin_generate_reference][:postcode]
-      generate_reference_model = Admin::GenerateReferenceService.call(postcode)
-      redirect_to admin_generate_reference_path(id: generate_reference_model.reference)
+      @admin_generate_reference = Admin::GenerateReference.new(postcode: postcode)
+      if @admin_generate_reference.valid?
+        generate_reference_model = Admin::GenerateReferenceService.call(postcode)
+        redirect_to admin_generate_reference_path(id: generate_reference_model.reference)
+      else
+        flash.now[:warn] = @admin_generate_reference.errors[:postcode]
+        render :new
+      end
     end
 
     def find_resource
