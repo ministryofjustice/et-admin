@@ -155,6 +155,10 @@ Sets the db password (defaults to blank as not required in docker setup) - must 
 
 Sets the db name (defaults to 'et_api_development' which is the default for the API application)
 
+#### ET_API_URL
+
+Provides access to the generic ET API service, which has an endpoint currently used for the reference generator.
+
 #### PORT
 
 The port on which the web server will run - defaults to 3000
