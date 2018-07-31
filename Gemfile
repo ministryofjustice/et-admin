@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'sidekiq', '~> 5.1', '>= 5.1.3'
 gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
+gem 'sidekiq-failures', '~> 1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
