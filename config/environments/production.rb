@@ -100,4 +100,8 @@ Rails.application.configure do
 
   config.et_atos_api.username = ENV.fetch('ATOS_API_USERNAME')
   config.et_atos_api.password = ENV.fetch('ATOS_API_PASSWORD')
+
+  Raven.configure do |config|
+    config.dsn = ENV.fetch('RAVEN_DSN', '')
+  end
 end
