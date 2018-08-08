@@ -10,4 +10,7 @@ EXPOSE 8080
 
 RUN bash -c "DB_ADAPTOR=nulldb bundle exec rake assets:precompile RAILS_ENV=production ATOS_API_USERNAME=foo ATOS_API_PASSWORD=bar"
 
+RUN wget https://github.com/papertrail/remote_syslog2/releases/download/v0.20/remote-syslog2_0.20_amd64.deb
+RUN dpkg -i remote-syslog2_0.20_amd64.deb
+
 CMD ["./run.sh"]
