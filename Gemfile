@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2.1'
 # Use postgres as the database for Active Record
 gem 'pg', '~> 1.0'
 gem 'unicorn'
@@ -37,6 +37,10 @@ gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
 gem 'sidekiq-failures', '~> 1.0'
 gem 'sentry-raven', '~> 2.7', '>= 2.7.4'
 
+# AWS SDK gem
+gem 'aws-sdk-s3', '~> 1.17'
+
+
 # Use uk_postcode to validate postcodes for manual generation
 gem 'uk_postcode', '~> 2.1'
 
@@ -56,7 +60,7 @@ group :development do
 end
 
 gem 'devise', '~> 4.4'
-gem 'activeadmin', '~> 1.2'
+gem 'activeadmin', '~> 1.3'
 gem 'activeadmin_addons', '~> 1.4'
 gem 'activerecord-import', '~> 0.17'
 gem 'active_admin_import', '~> 3.1'
