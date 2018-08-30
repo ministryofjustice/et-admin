@@ -9,10 +9,7 @@ module Admin
     has_many :respondents, through: :claim_respondents
     has_many :representatives, through: :claim_representatives
     has_many :uploaded_files, through: :claim_uploaded_files
-
-    def primary_claimant
-      claimants.first
-    end
+    belongs_to :primary_claimant, class_name: 'Admin::Claimant'
 
     def name
       claimant = primary_claimant
