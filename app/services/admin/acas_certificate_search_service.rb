@@ -1,7 +1,7 @@
 module Admin
   class AcasCertificateSearchService
 
-    # @param [Admin::AcasCertificateForm] form The input form
+    # @param [AcasCertificateForm] form The input form
     def self.call(form)
       if form.number.nil?
         form.certificate = AcasCertificate.nil_instance

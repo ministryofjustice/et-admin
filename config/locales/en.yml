@@ -34,12 +34,12 @@ en:
     addons:
       boolean:
         models:
-          admin/office:
+          office:
             is_default:
               false_value: ' '
   activemodel:
     attributes:
-      admin/acas_certificate_form:
+      acas_certificate_form:
         date_of_receipt: 'ACAS first contact'
         date_of_issue: 'ACAS conciliation closed'
         method_of_issue: 'Certificate sent'
@@ -48,7 +48,7 @@ en:
         certificate_download: 'Certificate download'
     errors:
       models:
-        admin/acas_certificate_form:
+        acas_certificate_form:
           attributes:
             number:
               not_found: 'No certificate returned from ACAS for %{number}'

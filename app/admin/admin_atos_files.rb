@@ -1,4 +1,4 @@
-ActiveAdmin.register Admin::AtosFile, as: 'AtosFiles' do
+ActiveAdmin.register AtosFile, as: 'AtosFiles' do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -28,7 +28,7 @@ ActiveAdmin.register Admin::AtosFile, as: 'AtosFiles' do
 
   controller do
     def find_resource
-      ::Admin::AtosFile.find(URI.decode(params[:id]))
+      ::AtosFile.find(URI.decode(params[:id]))
     end
 
     def apply_decorations(resource)
