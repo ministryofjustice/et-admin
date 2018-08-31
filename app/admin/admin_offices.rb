@@ -1,4 +1,4 @@
-ActiveAdmin.register Admin::Office, as: 'ET Office' do
+ActiveAdmin.register Office, as: 'ET Office' do
   config.batch_actions = false
   config.filters = false
   config.per_page = [10, 25, 50]

@@ -1,6 +1,6 @@
 module Admin
   class GenerateReferenceService
-    def self.call(postcode, base_url: ENV.fetch('ET_API_URL'), into: Admin::GenerateReference.new)
+    def self.call(postcode, base_url: ENV.fetch('ET_API_URL'), into: ::GenerateReference.new)
 
       response = HTTParty.post("#{base_url}/v2/references/create_reference",
                                headers: {

@@ -1,4 +1,4 @@
-ActiveAdmin.register Admin::Claim, as: 'Claims' do
+ActiveAdmin.register Claim, as: 'Claims' do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -14,6 +14,7 @@ ActiveAdmin.register Admin::Claim, as: 'Claims' do
   index do
     selectable_column
     id_column
+    column :name
     column :reference
   end
 
@@ -22,7 +23,8 @@ ActiveAdmin.register Admin::Claim, as: 'Claims' do
       f.input :reference
       f.input :submission_reference
       f.input :submission_channel
-      f.input :claimant_ids, as: :selected_list, label: 'Claimants'
+      f.input :primary_claimant, member_label: Proc.new { |c| "#{c.first_name} #{c.last_name}" }
+      f.input :secondary_claimant_ids, as: :selected_list, label: 'Claimants'
     end
     f.actions
   end
@@ -30,7 +32,7 @@ ActiveAdmin.register Admin::Claim, as: 'Claims' do
   show do |claim|
     default_attribute_table_rows = active_admin_config.resource_columns
     attributes_table(*default_attribute_table_rows)
-    panel('Claimants') do
+    panel('Secondary Claimants') do
       table_for claim.claimants do
         column(:id) { |r| auto_link r, r.id }
         column :title

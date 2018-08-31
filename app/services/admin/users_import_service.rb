@@ -23,7 +23,7 @@ module Admin
 
     def initialize_role_cache
       self.role_cache = Hash.new do |hash, key|
-        Admin::Role.find_by(name: key).tap do |role|
+        ::Role.find_by(name: key).tap do |role|
           hash[key] = role
           raise "Unknown role #{key}" unless role.present?
         end

@@ -1,4 +1,4 @@
-ActiveAdmin.register Admin::AcasCertificateForm, as: 'Acas Certificates' do
+ActiveAdmin.register AcasCertificateForm, as: 'Acas Certificates' do
   menu false
 
   show do
@@ -56,7 +56,7 @@ ActiveAdmin.register Admin::AcasCertificateForm, as: 'Acas Certificates' do
   end
   controller do
     def find_resource
-      form = ::Admin::AcasCertificateForm.new(number: params[:number], current_admin_user: current_admin_user)
+      form = ::AcasCertificateForm.new(number: params[:number], current_admin_user: current_admin_user)
       ::Admin::AcasCertificateSearchService.call(form)
       form
     end
