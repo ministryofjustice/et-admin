@@ -3,7 +3,8 @@ class OfficePostCode < ApplicationRecord
 
   belongs_to :office
 
-  validates :postcode, presence: true, uniqueness: true
+  validates :postcode, presence: true
+  validates_uniqueness_of :postcode, case_sensitive: false
 
   def to_s
     postcode

@@ -1,4 +1,4 @@
-ActiveAdmin.register OfficePostCode, as: 'Office Post Codes' do
+ActiveAdmin.register OfficePostCode, as: 'Office Postcodes' do
   actions :all
   config.batch_actions = false
 
