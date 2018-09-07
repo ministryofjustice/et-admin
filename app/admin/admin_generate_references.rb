@@ -1,4 +1,4 @@
-ActiveAdmin.register GenerateReference, as: 'Generate Reference' do
+ActiveAdmin.register Admin::GenerateReference, as: 'Generate Reference' do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -43,7 +43,7 @@ ActiveAdmin.register GenerateReference, as: 'Generate Reference' do
     end
 
     def find_resource
-      ::GenerateReference.new(reference: params[:id])
+      Admin::GenerateReference.new(reference: params[:id])
     end
   end
 end
