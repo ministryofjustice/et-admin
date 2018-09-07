@@ -1,4 +1,5 @@
-class GenerateReference
+module Admin
+  class GenerateReference
   include ActiveModel::Model
 
   attr_accessor :postcode, :reference
@@ -15,5 +16,6 @@ class GenerateReference
 
   def self.base_class
     self
+  end
   end
 end
