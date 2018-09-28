@@ -1,5 +1,7 @@
 ActiveAdmin.register Admin::User, as: 'User' do
-  permit_params :email, :password, :password_confirmation
+  before_action :remove_unused_pw_params, only: :update
+  permit_params :email, :username, :department, :password,
+                :password_confirmation, :name, role_ids: []
 
   collection_action :import, method: :get do
     authorize!(:import, active_admin_config.resource_class)
@@ -29,9 +31,19 @@ ActiveAdmin.register Admin::User, as: 'User' do
     end
   end
 
+  controller do
+    def remove_unused_pw_params
+      if params[:admin_user][:password].blank? && params[:admin_user][:password_confirmation].blank?
+        params[:admin_user].delete(:password)
+        params[:admin_user].delete(:password_confirmation)
+      end
+    end
+  end
+
   index do
     selectable_column
     id_column
+    column :name
     column :username
     column :email
     column :department
@@ -48,6 +60,7 @@ ActiveAdmin.register Admin::User, as: 'User' do
 
   show do |user|
     attributes_table do
+      row :name
       row :email
       row :reset_password_sent_at
       row :remember_created_at
@@ -60,7 +73,6 @@ ActiveAdmin.register Admin::User, as: 'User' do
       row :created_at
       row :updated_at
       row :username
-      row :name
       row :department
       row :failed_attempts
       row :locked_at
@@ -70,12 +82,15 @@ ActiveAdmin.register Admin::User, as: 'User' do
 
   form do |f|
     f.inputs do
+      f.input :name
       f.input :email
       f.input :username
       f.input :department
       f.input :password
       f.input :password_confirmation
-      f.input :role_ids, as: :selected_list, label: 'Roles'
+      if authorized?(:index, Admin::Role)
+        f.input :role_ids, as: :selected_list, label: 'Roles'
+      end
     end
     f.actions
   end

@@ -8,8 +8,9 @@
 
 controlled_resources = [:offices, :jobs, :acas, :acas_download_logs,
   :addresses, :atos_files, :claims, :claimants, :exports, :exported_files,
-  :representatives, :respondents, :responses, :uploaded_files, :users, :acas_check_digits,
-  :reference_number_generators]
+  :roles, :representatives, :respondents, :responses, :uploaded_files, :users,
+  :acas_check_digits, :reference_number_generators]
+
 permissions = [:create, :read, :update, :delete, :import].product(controlled_resources).map { |pair| pair.join('_') }.sort
 
 permissions.each do |p|
@@ -24,6 +25,8 @@ user_role = Admin::Role.find_by!(name: 'User')
 
 if Rails.env.development? || ENV.fetch('SEED_EXAMPLE_USERS', 'false') == 'true'
   Admin::User.find_or_create_by!(email: 'admin@example.com') do |user|
+    user.name = 'Administrator'
+    user.department = 'DCD'
     user.username = 'admin'
     user.password = 'password'
     user.password_confirmation = 'password'
@@ -31,33 +34,26 @@ if Rails.env.development? || ENV.fetch('SEED_EXAMPLE_USERS', 'false') == 'true'
   end
 
   Admin::User.find_or_create_by!(email: 'developer@example.com') do |user|
+    user.name = 'Developer'
+    user.department = 'DCD'
     user.username = 'developer'
     user.password = 'password'
     user.password_confirmation = 'password'
     user.roles << developer_role unless user.roles.include?(developer_role)
   end
 
-  Admin::User.find_or_create_by!(email: 'senioruser@example.com') do |user|
-    user.username = 'senioruser'
-    user.password = 'password'
-    user.password_confirmation = 'password'
-    user.roles << super_user_role unless user.roles.include?(super_user_role)
-  end
-
   Admin::User.find_or_create_by!(email: 'superuser@example.com') do |user|
+    user.name = 'Super User'
+    user.department = 'DCD'
     user.username = 'superuser'
     user.password = 'password'
     user.password_confirmation = 'password'
     user.roles << super_user_role unless user.roles.include?(super_user_role)
   end
 
-  Admin::User.find_or_create_by!(email: 'junioruser@example.com') do |user|
-    user.username = 'junioruser'
-    user.password = 'password'
-    user.password_confirmation = 'password'
-    user.roles << user_role unless user.roles.include?(user_role)
-  end
   Admin::User.find_or_create_by!(email: 'user@example.com') do |user|
+    user.name = 'User'
+    user.department = 'DCD'
     user.username = 'user'
     user.password = 'password'
     user.password_confirmation = 'password'
