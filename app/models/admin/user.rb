@@ -1,5 +1,7 @@
 module Admin
   class User < ApplicationRecord
+    validates :username, presence: true, uniqueness: true
+    validates :name, :department, :role_ids, presence: true, on: :create
     self.table_name = :admin_users
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
