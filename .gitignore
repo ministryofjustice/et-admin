@@ -24,3 +24,5 @@
 .idea
 /public/assets
 **/.DS_Store
+
+awslogs.conf
