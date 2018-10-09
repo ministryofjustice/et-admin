@@ -1,5 +1,6 @@
 module Admin
   class User < ApplicationRecord
+    before_validation :strip_username_whitespace
     validates :username, presence: true, uniqueness: true
     validates :name, :department, :role_ids, presence: true, on: :create
     self.table_name = :admin_users
@@ -20,6 +21,10 @@ module Admin
     def cache_permissions(*)
       self.permission_names = roles.map(&:permission_names).flatten.uniq.compact
       self.is_admin = roles.any?(&:is_admin?)
+    end
+
+    def strip_username_whitespace
+      self.username = username.strip
     end
   end
 end
