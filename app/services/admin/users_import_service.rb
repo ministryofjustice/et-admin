@@ -33,6 +33,7 @@ module Admin
     def import_csv
       lines = tempfile.readlines("\n").map { |l| l.gsub(/\n\z/, '').gsub(/\r\z/, '') }
       rows = CSV.parse(lines.join("\n"), headers: true)
+      rows = strip_username_whitespace(rows)
       dups = duplicate_emails(rows)
       if dups.present?
         errors.add(:tempfile, "The file contains the following duplicate emails #{dups.join(' - ')}")
@@ -89,6 +90,12 @@ module Admin
     def duplicate_usernames(rows)
       usernames = rows.map {|r| r['username']}
       usernames.select { |e| usernames.count(e) > 1 }
+    end
+
+    def strip_username_whitespace(rows)
+      rows.each do |row|
+        row['username'] = row['username'].strip
+      end
     end
   end
 end
