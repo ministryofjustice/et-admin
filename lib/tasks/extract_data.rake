@@ -5,16 +5,16 @@ namespace :extract_data do
     Claim.where(updated_at: Date.parse('2018-10-08')..Time.now).each do |record|
       next if record.employment_details.empty?
       record_hash = record.employment_details.symbolize_keys
-                                 .slice(:net_pay,
-                                        :net_pay_period_type,
-                                        :gross_pay,
-                                        :gross_pay_period_type,
-                                        :enrolled_in_pension_scheme,
-                                        :benefit_details,
-                                        :start_date,
-                                        :end_date,
-                                        :notice_period_end_date,
-                                        :job_title)
+                          .slice(:net_pay,
+                                 :net_pay_period_type,
+                                 :gross_pay,
+                                 :gross_pay_period_type,
+                                 :enrolled_in_pension_scheme,
+                                 :benefit_details,
+                                 :start_date,
+                                 :end_date,
+                                 :notice_period_end_date,
+                                 :job_title)
       record_hash[:desired_outcomes] = record.desired_outcomes
       record_hash[:other_outcome] = record.other_outcome
       policy_data << record_hash
@@ -32,11 +32,14 @@ namespace :extract_data do
   desc 'Prints the percentage of employment_details completed from all claims complete since 8th October 2018'
   task employment_details_completion_rate: :environment do
     include ActiveSupport::NumberHelper
-    number_completed = Claim.where(updated_at: Date.parse('2018-10-08')..Time.now)
-                            .where.not(employment_details: {}).count.to_f
-    total_completed = Claim.where(updated_at: Date.parse('2018-10-08')..Time.now).count.to_f
+    number_completed = Claim
+                       .where(updated_at: Date.parse('2018-10-08')..Time.now)
+                       .where.not(employment_details: {}).count.to_f
+    total_completed = Claim
+                      .where(updated_at: Date.parse('2018-10-08')..Time.now)
+                      .count.to_f
 
-    puts number_to_percentage(number_completed / total_completed, precision: 2)
+    puts number_to_percentage((number_completed / total_completed) * 100,
+                              precision: 2)
   end
-
 end
