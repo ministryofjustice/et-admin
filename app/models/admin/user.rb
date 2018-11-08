@@ -1,7 +1,8 @@
 module Admin
   class User < ApplicationRecord
     before_validation :strip_username_whitespace
-    validates :username, presence: true, uniqueness: true
+    validates :username, presence: true, uniqueness: true,
+                         length: { minimum: 4, maximum: 30 }, username: true
     validates :name, :department, :role_ids, presence: true, on: :create
     self.table_name = :admin_users
     # Include default devise modules. Others available are:
