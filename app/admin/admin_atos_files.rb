@@ -12,9 +12,17 @@ ActiveAdmin.register AtosFile, as: 'AtosFiles' do
 #   permitted
 # end
 
+  sidebar :systems do
+    obj = OpenStruct.new(external_system_reference: assigns[:external_system].reference)
+    form_for obj, as: '', url: admin_atos_files_path, method: :get do |f|
+      f.collection_radio_buttons :external_system_reference, ExternalSystem.where("reference ilike '%atos%'"), :reference, :name
+      f.submit value: 'Go To System', data: { disable_with: 'Go To System' }
+    end
+  end
+
   index do
     column(:id, sortable: false) do |r|
-      link_to "Download #{r.id}", download_admin_atos_file_path(id: URI.encode(r.id).gsub(/\./, '%2E'))
+      link_to "Download #{r.id}", download_admin_atos_file_path(id: URI.encode(r.id).gsub(/\./, '%2E'), external_system_reference: r.external_system.reference)
     end
   end
 
@@ -27,8 +35,14 @@ ActiveAdmin.register AtosFile, as: 'AtosFiles' do
   end
 
   controller do
+    before_action do
+      ref = params.fetch(:external_system_reference, 'atos')
+      @external_system = ExternalSystem.find_by(reference: ref)
+      render(status: 404, inline: "External system not found") unless @external_system
+    end
+
     def find_resource
-      ::AtosFile.find(URI.decode(params[:id]))
+      ::AtosFile.find(URI.decode(params[:id]), external_system: @external_system)
     end
 
     def apply_decorations(resource)
@@ -53,7 +67,7 @@ ActiveAdmin.register AtosFile, as: 'AtosFiles' do
 
     def apply_pagination(collection)
       collection
-      collection.all
+      collection.all(external_system: @external_system)
     end
   end
 end

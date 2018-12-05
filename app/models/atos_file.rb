@@ -2,11 +2,12 @@ require 'httparty'
 class AtosFile
   class AtosFileProxy
     include Enumerable
-    def initialize
+    def initialize(external_system:)
       self._page_size = 25
       self._current_page = 1
-      self.username = Rails.configuration.et_atos_api.username
-      self.password = Rails.configuration.et_atos_api.password
+      self.username = external_system.config[:username]
+      self.password = external_system.config[:password]
+      self.external_system = external_system
     end
 
     def each(&block)
@@ -47,17 +48,17 @@ class AtosFile
       @response ||= begin
         response = HTTParty.get("#{base_url}/list", basic_auth: { username: username, password: password })
         response.body.lines.reverse.map do |line|
-          AtosFile.new(id: line.strip)
+          AtosFile.new(id: line.strip, external_system: external_system)
         end
       end
 
     end
 
-    attr_accessor :_page_size, :_current_page, :username, :password
+    attr_accessor :_page_size, :_current_page, :username, :password, :external_system
   end
   include ActiveModel::Model
 
-  attr_accessor :id
+  attr_accessor :id, :external_system
 
   def self.columns
     []
@@ -67,12 +68,12 @@ class AtosFile
     :id
   end
 
-  def self.all
-    AtosFileProxy.new
+  def self.all(external_system:)
+    AtosFileProxy.new(external_system: external_system)
   end
 
-  def self.find(id)
-    all.find {|r| r.id == id}
+  def self.find(id, external_system:)
+    all(external_system: external_system).find {|r| r.id == id}
   end
 
   def self.base_class
@@ -84,7 +85,7 @@ class AtosFile
   end
 
   def download(to:)
-    HTTParty.get("#{base_url}/download/#{id}", basic_auth: { username: Rails.configuration.et_atos_api.username, password: Rails.configuration.et_atos_api.password }) do |chunk|
+    HTTParty.get("#{base_url}/download/#{id}", basic_auth: { username: external_system.config[:username], password: external_system.config[:password] }) do |chunk|
       to.write(chunk)
     end
   end
