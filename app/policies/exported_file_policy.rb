@@ -17,7 +17,11 @@ class ExportedFilePolicy < ApplicationPolicy
     user.is_admin? || user.permission_names.include?('update_exported_files')
   end
 
-  def destroy
+  def destroy?
+    user.is_admin? || user.permission_names.include?('delete_exported_files')
+  end
+
+  def destroy_all?
     user.is_admin? || user.permission_names.include?('delete_exported_files')
   end
 end
