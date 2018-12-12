@@ -1,8 +1,10 @@
 namespace :extract_data do
   desc 'Creates a CSV file with answers from sections 5, 6 and 9 of the paper form'
-  task policy_csv: :environment do
+  task :policy_csv, [:year, :month_as_int] => [:environment] do |task, args|
+    first_of_month = Date.new(args[:year].to_i, args[:month_as_int].to_i)
+    last_of_month = Date.new(args[:year].to_i, args[:month_as_int].to_i, -1)
     policy_data = []
-    Claim.where(updated_at: Date.parse('2018-10-08')..Time.now).each do |record|
+    Claim.where(updated_at: first_of_month..last_of_month).each do |record|
       next if record.employment_details.empty?
       record_hash = record.employment_details.symbolize_keys
                           .slice(:net_pay,
