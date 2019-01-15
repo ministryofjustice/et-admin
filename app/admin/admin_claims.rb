@@ -33,7 +33,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
     default_attribute_table_rows = active_admin_config.resource_columns
     attributes_table(*default_attribute_table_rows)
     panel('Secondary Claimants') do
-      table_for claim.claimants do
+      table_for claim.secondary_claimants do
         column(:id) { |r| auto_link r, r.id }
         column :title
         column :first_name
@@ -41,15 +41,15 @@ ActiveAdmin.register Claim, as: 'Claims' do
       end
     end
 
-    panel('Respondents') do
-      table_for claim.respondents do
+    panel('Secondary Respondents') do
+      table_for claim.secondary_respondents do
         column(:id) { |r| auto_link r, r.id }
         column :name
       end
     end
 
-    panel('Representatives') do
-      table_for claim.representatives do
+    panel('Secondary Representatives') do
+      table_for claim.secondary_representatives do
         column(:id) { |r| auto_link r, r.id }
         column(:name)
       end
