@@ -12,4 +12,7 @@ ActiveAdmin.register Representative, as: 'Representatives' do
 #   permitted
 # end
 
+  preserve_default_filters!
+  remove_filter :address
+
 end
