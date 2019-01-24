@@ -12,4 +12,6 @@ ActiveAdmin.register Respondent, as: 'Respondents' do
 #   permitted
 # end
 
+  preserve_default_filters!
+  remove_filter :address, :work_address
 end

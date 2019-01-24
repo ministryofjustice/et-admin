@@ -11,6 +11,10 @@ ActiveAdmin.register UploadedFile, as: 'UploadedFiles' do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
+
+  preserve_default_filters!
+  remove_filter :file_attachment, :file_blob, :checksum
+
   show do
     attributes_table title: 'File Details' do
       row(:filename) { |f| link_to(f.filename, rails_blob_path(f.file, disposition: 'attachment')) }

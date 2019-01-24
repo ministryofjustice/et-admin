@@ -11,6 +11,10 @@ ActiveAdmin.register Export, as: 'Exports' do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
+
+  preserve_default_filters!
+  remove_filter :pdf_file, :resource_type, :in_progress, :messages
+
   show do |export|
     attributes_table do
       row(:resource) do

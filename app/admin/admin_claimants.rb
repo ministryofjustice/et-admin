@@ -11,6 +11,10 @@ ActiveAdmin.register Claimant, as: 'Claimants' do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
+
+  preserve_default_filters!
+  remove_filter :address
+
   show do |claimant|
     attributes_table do
       row :title
