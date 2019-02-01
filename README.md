@@ -120,6 +120,12 @@ setup your own database etc.. Just go about things in the normal way, but rememb
 
 ### Important Environment Variables
 
+#### CLOUD_PROVIDER
+
+Defaults to 'amazon' at the moment - valid values are 'amazon' and 'azure'
+
+This switch will eventually be removed, it is only present for the transition from amazon to azure
+
 #### ATOS_API_URL
 
 The admin provides a basic ATOS API client to read the zip files that have been
