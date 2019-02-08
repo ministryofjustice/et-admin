@@ -87,6 +87,15 @@ GEM
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
     aws-sigv4 (1.0.3)
+    azure-core (0.1.15)
+      faraday (~> 0.9)
+      faraday_middleware (~> 0.10)
+      nokogiri (~> 1.6)
+    azure-storage (0.15.0.preview)
+      azure-core (~> 0.1)
+      faraday (~> 0.9)
+      faraday_middleware (~> 0.10)
+      nokogiri (~> 1.6, >= 1.6.8)
     bcrypt (3.1.12)
     bindex (0.5.0)
     builder (3.2.3)
@@ -117,6 +126,8 @@ GEM
     execjs (2.7.0)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.13.1)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -309,6 +320,7 @@ DEPENDENCIES
   activeadmin_addons (~> 1.4)
   activerecord-import (~> 0.17)
   aws-sdk-s3 (~> 1.17)
+  azure-storage (~> 0.15.0.preview)
   byebug
   coffee-rails (~> 4.2)
   devise (~> 4.4)
@@ -334,4 +346,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.16.4
+   1.17.3
