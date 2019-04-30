@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 5.2.3'
 # Azure deployment so we need this
 gem 'azure_env_secrets', git: 'https://github.com/ministryofjustice/azure_env_secrets.git', tag: 'v0.1.3'
 # Use postgres as the database for Active Record
@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'sidekiq', '~> 5.1', '>= 5.1.3'
-gem 'sidekiq-cron', '~> 0.6', '>= 0.6.3'
+gem 'sidekiq-cron', '~> 1.1'
 gem 'sidekiq-failures', '~> 1.0'
 gem 'sentry-raven', '~> 2.7', '>= 2.7.4'
 
@@ -51,7 +51,7 @@ gem 'uk_postcode', '~> 2.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'dotenv-rails', '~> 2.4'
+  gem 'dotenv-rails', '~> 2.7'
 end
 
 group :development do
@@ -67,8 +67,8 @@ gem 'devise', '~> 4.6'
 gem 'activeadmin', '~> 1.3'
 gem 'activeadmin_addons', '~> 1.4'
 gem 'activerecord-import', '~> 0.17'
-gem 'active_admin_import', '~> 3.1'
-gem 'pundit', '~> 1.1'
+gem 'active_admin_import', '~> 4.1'
+gem 'pundit', '~> 2.0'
 gem 'httparty', '~> 0.16.2'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
