@@ -21,7 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -64,12 +64,12 @@ group :development do
 end
 
 gem 'devise', '~> 4.6'
-gem 'activeadmin', '~> 1.3'
+gem 'activeadmin', '~> 2.0'
 gem 'activeadmin_addons', '~> 1.4'
 gem 'activerecord-import', '~> 0.17'
 gem 'active_admin_import', '~> 4.1'
 gem 'pundit', '~> 2.0'
-gem 'httparty', '~> 0.16.2'
+gem 'httparty', '~> 0.17'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
