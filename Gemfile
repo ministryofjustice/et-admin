@@ -40,6 +40,8 @@ gem 'sentry-raven', '~> 2.7', '>= 2.7.4'
 # AWS SDK gem
 gem 'aws-sdk-s3', '~> 1.17'
 
+# Azure gem for active storage
+gem 'azure-storage', '~> 0.15.0.preview', require: false
 
 # Use uk_postcode to validate postcodes for manual generation
 gem 'uk_postcode', '~> 2.1'
@@ -59,7 +61,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-gem 'devise', '~> 4.4'
+gem 'devise', '~> 4.6'
 gem 'activeadmin', '~> 1.3'
 gem 'activeadmin_addons', '~> 1.4'
 gem 'activerecord-import', '~> 0.17'
