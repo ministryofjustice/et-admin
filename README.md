@@ -186,3 +186,10 @@ Sets the redis database number (defaults to 1)
 Rather than specifying the above 3, you can use the traditional REDIS_URL environment variable (defaults to the correct URL when using the above 3 environment variables)
 
 
+If your redis server needs a password, it must be specified using
+
+```
+REDIS_PASSWORD=<your password>
+```
+
+
