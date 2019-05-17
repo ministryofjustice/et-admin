@@ -1,5 +1,7 @@
 # ET Admin
 
+[![Build Status](https://dev.azure.com/HMCTS-PET/pet-azure-infrastructure/_apis/build/status/et-admin?branchName=develop)](https://dev.azure.com/HMCTS-PET/pet-azure-infrastructure/_build/latest?definitionId=18&branchName=develop)
+
 Admin Application for Employment Tribunals JADU Replacement
 
 ## Introduction
