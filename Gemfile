@@ -39,9 +39,6 @@ gem 'sidekiq-cron', '~> 1.1'
 gem 'sidekiq-failures', '~> 1.0'
 gem 'sentry-raven', '~> 2.7', '>= 2.7.4'
 
-# AWS SDK gem
-gem 'aws-sdk-s3', '~> 1.17'
-
 # Azure gem for active storage
 gem 'azure-storage', '~> 0.15.0.preview', require: false
 
