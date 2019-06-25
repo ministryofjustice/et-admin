@@ -1,0 +1,9 @@
+log/**/*
+tmp/**/*
+.env
+.env.test
+/public/uploads
+/public/assets
+/public/apply
+/node_modules
+azure-pipelines.yml

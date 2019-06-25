@@ -1,4 +1,4 @@
-FROM ministryofjustice/ruby:2.5.1-webapp-onbuild
+FROM employmenttribunal.azurecr.io/ruby263-onbuild:0.1
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
@@ -12,14 +12,16 @@ ENV APP_BUILD_DATE ${APP_BUILD_DATE}
 ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
 ENV APP_BUILD_TAG ${APP_BUILD_TAG}
 
-# Ensure the pdftk package is installed as a prereq for ruby PDF generation
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update && \
-    apt-get install -y pdftk
+# fix to address http://tzinfo.github.io/datasourcenotfound - ET ONLY
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -q && \
+    apt-get install -qy tzdata --no-install-recommends && apt-get clean
 
 EXPOSE 8080
 
 RUN bash -c "DB_ADAPTOR=nulldb bundle exec rake assets:precompile RAILS_ENV=production ATOS_API_USERNAME=foo ATOS_API_PASSWORD=bar SECRET_KEY_BASE=foo"
 
-CMD ["./run.sh"]
+# running app as a servive
+RUN mkdir /etc/service/app
+COPY run.sh /etc/service/app/run
+RUN chmod +x /etc/service/app/run
