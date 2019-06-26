@@ -1,4 +1,4 @@
-FROM employmenttribunal.azurecr.io/ruby263-onbuild:0.1
+FROM employmenttribunal.azurecr.io/ruby263-onbuild:0.2
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
