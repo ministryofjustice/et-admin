@@ -7,3 +7,4 @@ tmp/**/*
 /public/apply
 /node_modules
 azure-pipelines.yml
+Dockerfile
