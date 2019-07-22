@@ -4,10 +4,11 @@ ActiveAdmin.register Office, as: 'ET Office' do
   config.per_page = [10, 25, 50]
   config.sort_order = :name
 
-  actions :index
+  permit_params :name, :address, :telephone, :email, :code
   includes :office_post_codes
 
-  index download_links: false, title: "Employment Tribunal Offices" do
+  index title: "Employment Tribunal Offices" do
+    id_column
     column 'Office', sortable: :name do |o|
       div b o.name
       div o.address
