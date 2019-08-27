@@ -12,4 +12,5 @@ ActiveAdmin.register Admin::Permission, as: 'Permissions' do
 #   permitted
 # end
 
+  permit_params :name
 end

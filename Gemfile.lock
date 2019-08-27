@@ -49,6 +49,8 @@ GEM
       activerecord-import (~> 0.27)
       rchardet (~> 1.6)
       rubyzip (~> 1.2)
+    active_admin_scoped_collection_actions (0.4.0)
+      activeadmin (>= 1.1, < 3.a)
     active_material (1.4.2)
     activeadmin (2.3.1)
       arbre (~> 1.2, >= 1.2.1)
@@ -333,6 +335,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_admin_import (~> 4.1)
+  active_admin_scoped_collection_actions (~> 0.4.0)
   activeadmin (~> 2.0)
   activeadmin_addons (~> 1.4)
   azure-storage (~> 0.15.0.preview)

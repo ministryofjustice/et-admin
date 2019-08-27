@@ -20,4 +20,8 @@ class ClaimPolicy < ApplicationPolicy
   def destroy
     user.is_admin? || user.permission_names.include?('delete_claims')
   end
+
+  def re_export?
+    user.is_admin || user.permission_names.include?('re_export_claims')
+  end
 end

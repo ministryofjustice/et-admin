@@ -16,6 +16,7 @@ permissions = [:create, :read, :update, :delete, :import].product(controlled_res
 permissions.each do |p|
   Admin::Permission.find_or_create_by! name: p
 end
+Admin::Permission.find_or_create_by! name: "re_export_claims"
 
 admin_role = Admin::Role.find_by(name: 'Admin')
 super_user_role = Admin::Role.find_by!(name: 'Super User')

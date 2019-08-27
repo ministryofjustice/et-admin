@@ -24,6 +24,24 @@ ActiveAdmin.register Claim, as: 'Claims' do
   filter :primary_claimant_last_name_cont, label: "Primary claimant last name"
   filter :primary_respondent_name_or_primary_respondent_contact_cont, label: 'Primary Respondent Name'
 
+  config.batch_actions = true
+
+  config.scoped_collection_actions_if = -> do
+    next false unless authorized?(:re_export, resource_class)
+    filtered_scoped = (params[:q] || params[:scope])
+    on_all = active_admin_config.scoped_collection_actions_on_all
+    has_actions = active_admin_config.scoped_collection_actions.any?
+    batch_actions_enabled = active_admin_config.batch_actions_enabled?
+    ( batch_actions_enabled && has_actions && (filtered_scoped || on_all) )
+  end
+
+  scoped_collection_action :re_export do
+    unless authorized?(:re_export, resource_class)
+      flash[:error] = "You do not have permissions to re export"
+      head :ok and next
+    end
+    Rails.logger.info "Collection action will be performed on #{scoped_collection_records.map(&:id)}"
+  end
 
   index do
     selectable_column

@@ -15,6 +15,7 @@
 @import "et_offices_active_admin";
 @import "et_acas_active_admin";
 @import "generate_fgr_admin";
+@import "active_admin_scoped_collection_actions";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
