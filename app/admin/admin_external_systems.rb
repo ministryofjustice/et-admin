@@ -19,7 +19,7 @@ ActiveAdmin.register ExternalSystem, as: 'External Systems' do
     active_admin_comments
   end
 
-  index download_links: false do
+  index download_links: true do
     id_column
     column :name
     column :reference

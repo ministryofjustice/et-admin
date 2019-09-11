@@ -5,6 +5,9 @@ class ExternalSystem < ApplicationRecord
 
   accepts_nested_attributes_for :configurations, reject_if: :all_blank
 
+  def as_json(options = {})
+    super(options.merge include: :configurations)
+  end
   def office_codes=(arr)
     super arr.reject(&:blank?)
   end
