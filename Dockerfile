@@ -1,4 +1,4 @@
-FROM employmenttribunal.azurecr.io/ruby26-onbuild:0.1
+FROM employmenttribunal.azurecr.io/ruby26-onbuild:0.2
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
@@ -15,12 +15,15 @@ ENV APP_BUILD_TAG ${APP_BUILD_TAG}
 # fix to address http://tzinfo.github.io/datasourcenotfound - ET ONLY
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -q && \
-    apt-get install -qy tzdata --no-install-recommends && apt-get clean
+    apt-get install -qy tzdata --no-install-recommends && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && rm -fr *Release* *Sources* *Packages* && \
+    truncate -s 0 /var/log/*log
 
 EXPOSE 8080
 RUN bash -c "DB_ADAPTOR=nulldb bundle exec rake assets:precompile RAILS_ENV=production ATOS_API_USERNAME=foo ATOS_API_PASSWORD=bar SECRET_KEY_BASE=foo"
 
 # running app as a servive
+ENV PHUSION true
 RUN mkdir /etc/service/app
 COPY run.sh /etc/service/app/run
 RUN chmod +x /etc/service/app/run
