@@ -7,14 +7,14 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 6.0.0'
 # Azure deployment so we need this
 gem 'azure_env_secrets', git: 'https://github.com/ministryofjustice/azure_env_secrets.git', tag: 'v0.1.3'
 # Use postgres as the database for Active Record
 gem 'pg', '~> 1.0'
-gem 'unicorn'
+gem 'iodine', '~> 0.7.33'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -63,7 +63,6 @@ end
 gem 'devise', '~> 4.7'
 gem 'activeadmin', '~> 2.0'
 gem 'activeadmin_addons', '~> 1.4'
-gem 'activerecord-import', '~> 0.17'
 gem 'active_admin_import', '~> 4.1'
 gem 'pundit', '~> 2.0'
 gem 'httparty', '~> 0.17'
