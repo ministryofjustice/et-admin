@@ -62,4 +62,5 @@ Rails.application.configure do
 
   config.et_atos_api.username = 'atos'
   config.et_atos_api.password = 'password'
+  config.hosts.clear
 end

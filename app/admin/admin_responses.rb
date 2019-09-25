@@ -12,7 +12,7 @@ ActiveAdmin.register Response, as: 'Responses' do
 #   permitted
 # end
 
-  index do
+  index download_links: true do
     selectable_column
     id_column
     column :reference
@@ -22,8 +22,14 @@ ActiveAdmin.register Response, as: 'Responses' do
     column :case_number
     column :claimants_name
     column :created_at
+    column :exports do |r|
+      r.exports.count
+    end
     actions
   end
+
+
+
 
   show do |response|
     default_attribute_table_rows = active_admin_config.resource_columns
@@ -42,5 +48,21 @@ ActiveAdmin.register Response, as: 'Responses' do
   filter :reference
   filter :case_number
   filter :created_at
+
+  scope :all, default: true
+  scope :not_exported
+  scope :not_exported_to_ccd
+
+
+  batch_action :export, form: {
+      external_system_id: ExternalSystem.pluck(:name, :id)
+  } do |ids, inputs|
+    response = Admin::ExportResponsesService.call(ids.map(&:to_i), inputs['external_system_id'].to_i)
+    if response.errors.present?
+      debug = 1
+    else
+      redirect_to admin_responses_path, notice: 'Responses queued for export'
+    end
+  end
 
 end

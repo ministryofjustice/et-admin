@@ -16,4 +16,8 @@ class Claim < ApplicationRecord
     claimant = primary_claimant
     "#{claimant.title} #{claimant.first_name} #{claimant.last_name}"
   end
+
+  def as_json(options = {})
+    super(options.merge include: :uploaded_files)
+  end
 end
