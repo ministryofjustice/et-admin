@@ -54,6 +54,10 @@ en:
               not_found: 'No certificate returned from ACAS for %{number}'
               invalid_certificate: 'Please enter a valid certificate number'
               unknown_exception: 'There was a problem with the ACAS service - please try again later'
+        admin/export_claims_service:
+          attributes:
+            base:
+              http_error: API responded with %{status_code}
   date:
     formats:
       long: "%d/%m%Y"

@@ -78,4 +78,18 @@ ActiveAdmin.register Claim, as: 'Claims' do
     active_admin_comments
   end
 
+  scope :all, default: true
+  scope :not_exported
+  scope :not_exported_to_ccd
+
+  batch_action :export, form: -> { { external_system_id: ExternalSystem.pluck(:name, :id) } } do |ids, inputs|
+    response = Admin::ExportClaimsService.call(ids.map(&:to_i), inputs['external_system_id'].to_i)
+    if response.errors.present?
+      redirect_to admin_claims_path, alert: "An error occured exporting your claims - #{response.errors.full_messages.join('<br/>')}"
+    else
+      redirect_to admin_claims_path, notice: 'Claims queued for export'
+    end
+  end
+
+
 end

@@ -12,6 +12,11 @@ class Claim < ApplicationRecord
   belongs_to :primary_respondent, class_name: 'Respondent', optional: true
   belongs_to :primary_repesentative, class_name: 'Representative', optional: true
 
+  has_many :exports, as: :resource
+
+  scope :not_exported, -> { joins("LEFT JOIN \"exports\" ON \"exports\".\"resource_id\" = \"claims\".\"id\" AND \"exports\".\"resource_type\" = 'Claim'").where(exports: {id: nil}) }
+  scope :not_exported_to_ccd, -> { joins("LEFT OUTER JOIN \"exports\" ON \"exports\".\"resource_id\" = \"claims\".\"id\" AND \"exports\".\"resource_type\" = 'Claim' LEFT OUTER JOIN \"external_systems\" ON \"exports\".\"external_system_id\" = \"external_systems\".\"id\" AND \"external_systems\".\"reference\" ~ 'ccd'").where(external_systems: {id: nil}) }
+
   def name
     claimant = primary_claimant
     "#{claimant.title} #{claimant.first_name} #{claimant.last_name}"

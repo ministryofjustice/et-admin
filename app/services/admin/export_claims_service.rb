@@ -1,25 +1,25 @@
 module Admin
-  class ExportResponsesService
+  class ExportClaimsService
     include ActiveModel::Model
     include ActiveModel::Attributes
-    attribute :response_ids
+    attribute :claim_ids
     attribute :external_system_id
     attribute :base_url
-    def self.call(response_ids, external_system_id, base_url: ENV.fetch('ET_API_URL'))
-      new(response_ids: response_ids, external_system_id: external_system_id, base_url: base_url).call
+    def self.call(claim_ids, external_system_id, base_url: ENV.fetch('ET_API_URL'))
+      new(claim_ids: claim_ids, external_system_id: external_system_id, base_url: base_url).call
     end
 
     def call
-      response = HTTParty.post("#{base_url}/v2/exports/export_responses",
+      response = HTTParty.post("#{base_url}/v2/exports/export_claims",
                                headers: {
                                    'Accept': 'application/json',
                                    'Content-Type': 'application/json'
                                },
                                body: {
                                    uuid: SecureRandom.uuid,
-                                   command: 'ExportResponses',
+                                   command: 'ExportClaims',
                                    data: {
-                                       response_ids: response_ids,
+                                       claim_ids: claim_ids,
                                        external_system_id: external_system_id
                                    },
                                    async: false

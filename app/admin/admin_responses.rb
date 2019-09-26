@@ -29,8 +29,6 @@ ActiveAdmin.register Response, as: 'Responses' do
   end
 
 
-
-
   show do |response|
     default_attribute_table_rows = active_admin_config.resource_columns
     attributes_table(*default_attribute_table_rows)
@@ -54,12 +52,10 @@ ActiveAdmin.register Response, as: 'Responses' do
   scope :not_exported_to_ccd
 
 
-  batch_action :export, form: {
-      external_system_id: ExternalSystem.pluck(:name, :id)
-  } do |ids, inputs|
+  batch_action :export, form: -> { { external_system_id: ExternalSystem.pluck(:name, :id) } } do |ids, inputs|
     response = Admin::ExportResponsesService.call(ids.map(&:to_i), inputs['external_system_id'].to_i)
     if response.errors.present?
-      debug = 1
+      redirect_to admin_claims_path, alert: "An error occured exporting your responses - #{response.errors.full_messages.join('<br/>')}"
     else
       redirect_to admin_responses_path, notice: 'Responses queued for export'
     end
