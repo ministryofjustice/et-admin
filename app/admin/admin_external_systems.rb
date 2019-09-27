@@ -3,7 +3,7 @@ ActiveAdmin.register ExternalSystem, as: 'External Systems' do
   filter :name
   filter :reference
 
-  permit_params :name, :reference, :enabled, :export, office_codes: [], configurations_attributes: [:id, :key, :value, :_destroy]
+  permit_params :name, :reference, :enabled, :export_claims, :export_responses, :export_queue, office_codes: [], configurations_attributes: [:id, :key, :value, :_destroy]
 
   show do |system|
     default_attribute_table_rows = active_admin_config.resource_columns
