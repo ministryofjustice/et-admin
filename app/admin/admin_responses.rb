@@ -52,7 +52,8 @@ ActiveAdmin.register Response, as: 'Responses' do
   scope :not_exported_to_ccd
 
 
-  batch_action :export, form: -> { { external_system_id: ExternalSystem.pluck(:name, :id) } } do |ids, inputs|
+  batch_action :export, form: -> { {external_system_id: ExternalSystem.pluck(:name, :id)} },
+               if: ->(_user) { authorized? :create, :export } do |ids, inputs|
     response = Admin::ExportResponsesService.call(ids.map(&:to_i), inputs['external_system_id'].to_i)
     if response.errors.present?
       redirect_to admin_claims_path, alert: "An error occured exporting your responses - #{response.errors.full_messages.join('<br/>')}"

@@ -5,6 +5,10 @@ class ExportPolicy < ApplicationPolicy
     end
 
   end
+  def create?
+    user.is_admin? || user.permission_names.include?('create_exports')
+  end
+
   def index?
     user.is_admin? || user.permission_names.include?('read_exports')
   end
