@@ -29,5 +29,17 @@ ActiveAdmin.register Export, as: 'Exports' do
       row :created_at
       row :updated_at
     end
+
+    panel('Events') do
+      table_for export.events do
+        column :created_at
+        column :state
+        column :uuid
+        column :data
+        column :percent_complete
+        column :message
+      end
+    end
+
   end
 end
