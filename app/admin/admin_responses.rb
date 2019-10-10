@@ -25,6 +25,14 @@ ActiveAdmin.register Response, as: 'Responses' do
     column :exports do |r|
       r.exports.count
     end
+    column :ccd_state do |c|
+      export = c.exports.ccd.last
+      next '' if export.nil?
+      str = export.state
+      next str unless str == 'complete'
+      str
+    end
+
     actions
   end
 
