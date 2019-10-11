@@ -22,7 +22,13 @@ class Claim < ApplicationRecord
     "#{claimant.title} #{claimant.first_name} #{claimant.last_name}"
   end
 
+  def ccd_state
+    export = exports.ccd.last
+    return '' if export.nil?
+    export.state
+  end
+
   def as_json(options = {})
-    super(options.merge include: :uploaded_files)
+    super(options.merge include: :uploaded_files, methods: [:ccd_state])
   end
 end
