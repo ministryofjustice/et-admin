@@ -23,4 +23,12 @@ ActiveAdmin.register UploadedFile, as: 'UploadedFiles' do
     end
   end
 
+  index do
+    selectable_column
+    id_column
+    column :filename
+    column :created_at
+    column :content_type
+  end
+
 end

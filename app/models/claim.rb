@@ -23,12 +23,16 @@ class Claim < ApplicationRecord
   end
 
   def ccd_state
-    export = exports.ccd.last
+    export = last_ccd_export
     return '' if export.nil?
     export.state
   end
 
+  def last_ccd_export
+    @last__ccd_export ||= exports.ccd.last
+  end
+
   def as_json(options = {})
-    super(options.merge include: :uploaded_files, methods: [:ccd_state])
+    super(options.merge include: :uploaded_files, methods: [:ccd_state, :last_ccd_export])
   end
 end
