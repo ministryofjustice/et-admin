@@ -39,12 +39,12 @@ ActiveAdmin.register Claim, as: 'Claims' do
       next '' if export.nil?
       str = export.state
       count = c.claimant_count
-      if str == 'in_progress'
+      if str == 'in_progress' && count > 1
         so_far = export.events.sub_case_exported.count
         str = "#{str} (#{so_far}/#{count})"
       end
       next str unless str == 'complete'
-      str = "#{str} (#{count})" if count > 0
+      str = "#{str} (#{count})" if count > 1
       "<a href='#{admin_export_url(export.id)}'>#{str}</a> (<a target='_blank' href='#{ENV.fetch('CCD_UI_BASE_URL', '')}/#{export.external_data['case_type_id']}/#{export.external_data['case_id']}'>#{export.external_system.name} - #{export.external_data['case_reference']}</a>)".html_safe
     end
   end
