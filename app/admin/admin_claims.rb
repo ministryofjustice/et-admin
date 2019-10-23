@@ -24,18 +24,28 @@ ActiveAdmin.register Claim, as: 'Claims' do
   filter :primary_claimant_last_name_cont, label: "Primary claimant last name"
   filter :primary_respondent_name_or_primary_respondent_contact_cont, label: 'Primary Respondent Name'
 
+  includes :secondary_claimants, :primary_claimant, :exports
 
   index do
     selectable_column
     id_column
     column :name
     column :reference
+    column :type do |c|
+      c.claimant_count == 1 ? 'Single' : 'Multiple'
+    end
     column :ccd_state do |c|
       export = c.exports.ccd.last
       next '' if export.nil?
       str = export.state
+      count = c.claimant_count
+      if str == 'in_progress'
+        so_far = export.events.sub_case_exported.count
+        str = "#{str} (#{so_far}/#{count})"
+      end
       next str unless str == 'complete'
-      "#{str} (<a target='_blank' href='#{ENV.fetch('CCD_UI_BASE_URL', '')}/#{export.external_data['case_type_id']}/#{export.external_data['case_id']}'>#{export.external_system.name} - #{export.external_data['case_reference']}</a>)".html_safe
+      str = "#{str} (#{count})" if count > 0
+      "<a href='#{admin_export_url(export.id)}'>#{str}</a> (<a target='_blank' href='#{ENV.fetch('CCD_UI_BASE_URL', '')}/#{export.external_data['case_type_id']}/#{export.external_data['case_id']}'>#{export.external_system.name} - #{export.external_data['case_reference']}</a>)".html_safe
     end
   end
 
