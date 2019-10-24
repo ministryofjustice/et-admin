@@ -47,6 +47,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
       str = "#{str} (#{count})" if count > 1
       "<a href='#{admin_export_url(export.id)}'>#{str}</a> (<a target='_blank' href='#{ENV.fetch('CCD_UI_BASE_URL', '')}/#{export.external_data['case_type_id']}/#{export.external_data['case_id']}'>#{export.external_system.name} - #{export.external_data['case_reference']}</a>)".html_safe
     end
+    actions
   end
 
   form do |f|
@@ -63,6 +64,12 @@ ActiveAdmin.register Claim, as: 'Claims' do
   show do |claim|
     default_attribute_table_rows = active_admin_config.resource_columns
     attributes_table(*default_attribute_table_rows)
+    panel('Files') do
+      table_for claim.uploaded_files do
+        column(:id) { |r| auto_link r, r.id }
+        column(:filename) { |f| link_to(f.filename, rails_blob_path(f.file, disposition: 'attachment')) }
+      end
+    end
     panel('Secondary Claimants') do
       table_for claim.secondary_claimants do
         column(:id) { |r| auto_link r, r.id }
@@ -86,12 +93,6 @@ ActiveAdmin.register Claim, as: 'Claims' do
       end
     end
 
-    panel('Files') do
-      table_for claim.uploaded_files do
-        column(:id) { |r| auto_link r, r.id }
-        column(:filename)
-      end
-    end
     active_admin_comments
   end
 
@@ -107,6 +108,31 @@ ActiveAdmin.register Claim, as: 'Claims' do
       redirect_to admin_claims_path, alert: "An error occured exporting your claims - #{response.errors.full_messages.join('<br/>')}"
     else
       redirect_to admin_claims_path, notice: 'Claims queued for export'
+    end
+  end
+
+  action_item :export,
+              only: :show,
+              if: ->() { authorized? :create, :export } do
+    options = {
+      :class         => "active-admin-export-resource",
+      "data-action"  => 'export',
+      "data-confirm" => 'Are you sure ?',
+      "data-inputs"  => { external_system_id: ExternalSystem.pluck(:name, :id) }.to_json,
+      "data-resource-id" => resource.id,
+      "data-resource-type" => resource.class
+    }
+    link_to 'Export To CCD', export_admin_claim_path, options
+  end
+
+  member_action :export, method: :post do
+    if authorized? :create, :export
+      response = Admin::ExportClaimsService.call([resource.id], params['external_system_id'].to_i)
+      if response.errors.present?
+        redirect_to admin_claims_path, alert: "An error occured exporting your claim - #{response.errors.full_messages.join('<br/>')}"
+      else
+        redirect_to admin_claims_path, notice: 'Claim queued for export'
+      end
     end
   end
 
