@@ -1,6 +1,7 @@
 class ExternalSystem < ApplicationRecord
   self.table_name = :external_systems
 
+  scope :ccd_only, -> { where("reference LIKE 'ccd_%'") }
   has_many :configurations, class_name: 'ExternalSystemConfiguration'
 
   accepts_nested_attributes_for :configurations, reject_if: :all_blank
