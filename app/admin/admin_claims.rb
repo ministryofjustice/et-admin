@@ -43,6 +43,9 @@ ActiveAdmin.register Claim, as: 'Claims' do
         so_far = export.events.sub_case_exported.count
         str = "#{str} (#{so_far}/#{count})"
       end
+      if ['failed', 'erroring'].include? str
+        next "<a href='#{admin_export_url(export.id)}'>#{str}</a>".html_safe
+      end
       next str unless str == 'complete'
       str = "#{str} (#{count})" if count > 1
       "<a href='#{admin_export_url(export.id)}'>#{str}</a> (<a target='_blank' href='#{ENV.fetch('CCD_UI_BASE_URL', '')}/#{export.external_data['case_type_id']}/#{export.external_data['case_id']}'>#{export.external_system.name} - #{export.external_data['case_reference']}</a>)".html_safe
