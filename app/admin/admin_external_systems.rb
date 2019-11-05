@@ -3,7 +3,7 @@ ActiveAdmin.register ExternalSystem, as: 'External Systems' do
   filter :name
   filter :reference
 
-  permit_params :name, :reference, :enabled, :export_claims, :export_responses, :export_queue, office_codes: [], configurations_attributes: [:id, :key, :value, :_destroy]
+  permit_params :name, :reference, :enabled, :export_claims, :export_responses, :always_save_export, :export_queue, office_codes: [], configurations_attributes: [:id, :key, :value, :_destroy]
 
   show do |system|
     default_attribute_table_rows = active_admin_config.resource_columns
@@ -27,6 +27,7 @@ ActiveAdmin.register ExternalSystem, as: 'External Systems' do
     column :enabled
     column :export_claims
     column :export_responses
+    column :always_save_export
     actions
   end
 
@@ -38,6 +39,7 @@ ActiveAdmin.register ExternalSystem, as: 'External Systems' do
       input :enabled
       input :export_claims
       input :export_responses
+      input :always_save_export
       input :export_queue
       input :office_codes, as: :check_boxes, collection: Office.all.map {|o| [o.name, o.code]}
     end
