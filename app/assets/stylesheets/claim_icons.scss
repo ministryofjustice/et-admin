@@ -1,0 +1,17 @@
+.claim-file-icon {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  padding: 0.1em;
+  &.csv {
+    background-image: image-url("claim-file-icon-csv.png");
+  }
+  &.rtf {
+    background-image: image-url("claim-file-icon-rtf.png");
+  }
+  &.pdf {
+    background-image: image-url("claim-file-icon-pdf.png");
+  }
+}

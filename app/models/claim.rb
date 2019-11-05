@@ -11,7 +11,7 @@ class Claim < ApplicationRecord
   belongs_to :primary_claimant, class_name: 'Claimant'
   belongs_to :primary_respondent, class_name: 'Respondent', optional: true
   belongs_to :primary_repesentative, class_name: 'Representative', optional: true
-
+  belongs_to :office, foreign_key: :office_code, primary_key: :code
   has_many :exports, as: :resource
 
   scope :not_exported, -> { joins("LEFT JOIN \"exports\" ON \"exports\".\"resource_id\" = \"claims\".\"id\" AND \"exports\".\"resource_type\" = 'Claim'").where(exports: {id: nil}) }

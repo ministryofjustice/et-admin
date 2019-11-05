@@ -28,11 +28,22 @@ ActiveAdmin.register Claim, as: 'Claims' do
 
   index do
     selectable_column
-    id_column
-    column :name
+    column :claimant_name do |c|
+      c.name
+    end
+    column :respondent_name do |c|
+      c.primary_respondent.name
+    end
     column :reference
+    column :office
+    column :date_of_receipt
     column :type do |c|
       c.claimant_count == 1 ? 'Single' : 'Multiple'
+    end
+    column :files do |c|
+      c.uploaded_files.user_only.map do |f|
+        link_to("<span class='claim-file-icon #{f.filename.split('.').last}'></span>".html_safe, rails_blob_path(f.file, disposition: 'attachment'))
+      end.join('').html_safe
     end
     column :ccd_state do |c|
       export = c.exports.ccd.last
