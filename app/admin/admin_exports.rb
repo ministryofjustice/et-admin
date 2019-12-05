@@ -13,7 +13,7 @@ ActiveAdmin.register Export, as: 'Exports' do
 # end
 
   preserve_default_filters!
-  remove_filter :pdf_file, :resource_type, :in_progress, :messages
+  remove_filter :pdf_file, :resource_type, :in_progress, :messages, :events
 
   show do |export|
     attributes_table do

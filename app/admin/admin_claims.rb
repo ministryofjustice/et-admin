@@ -19,7 +19,8 @@ ActiveAdmin.register Claim, as: 'Claims' do
   remove_filter :administrator, :created_at, :updated_at, :other_known_claimant_names
   remove_filter :discrimination_claims, :pay_claims, :desired_outcomes, :other_claim_details
   remove_filter :claim_details, :other_outcome, :send_claim_to_whistleblowing_entity
-  remove_filter :miscellaneous_information, :is_unfair_dismissal, :primary_claimant, :primary_respondent, :primary_representative
+  remove_filter :miscellaneous_information, :is_unfair_dismissal, :primary_claimant, :primary_respondent
+  remove_filter :exports
   filter :primary_claimant_first_name_cont, label: "Primary claimant first name"
   filter :primary_claimant_last_name_cont, label: "Primary claimant last name"
   filter :primary_respondent_name_or_primary_respondent_contact_cont, label: 'Primary Respondent Name'
@@ -53,6 +54,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
       if str == 'in_progress' && count > 1
         so_far = export.events.sub_case_exported.count
         str = "#{str} (#{so_far}/#{count})"
+        next "<a href='#{admin_export_url(export.id)}'>#{str}</a>".html_safe
       end
       if ['failed', 'erroring'].include? str
         next "<a href='#{admin_export_url(export.id)}'>#{str}</a>".html_safe

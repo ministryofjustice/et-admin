@@ -10,7 +10,7 @@ class Claim < ApplicationRecord
   has_many :uploaded_files, through: :claim_uploaded_files
   belongs_to :primary_claimant, class_name: 'Claimant'
   belongs_to :primary_respondent, class_name: 'Respondent', optional: true
-  belongs_to :primary_repesentative, class_name: 'Representative', optional: true
+  belongs_to :primary_representative, class_name: 'Representative', optional: true
   belongs_to :office, foreign_key: :office_code, primary_key: :code
   has_many :exports, as: :resource
 
