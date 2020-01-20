@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/HMCTS-PET/pet-azure-infrastructure/_apis/build/status/et-admin?branchName=develop)](https://dev.azure.com/HMCTS-PET/pet-azure-infrastructure/_build/latest?definitionId=18&branchName=develop)
 
-Admin Application for Employment Tribunals JADU Replacement
+Admin Application for Employment Tribunals System
 
 ## Introduction
 
@@ -18,7 +18,7 @@ and redis database.
 
 Once you have chosen your preferred route for running the admin :-
 
-Goto http://localhost:3000/admin assuming you are running on port 300 of course
+Goto http://localhost:3000/admin assuming you are running on port 3000 of course
 
 The default admin details are that provided by activeadmin which are
 
@@ -44,67 +44,47 @@ you will see it inside an iframe that should auto size as the content does.
 ## Developing And Testing
 
 As this application shares the database with the API, you will first need to run the API in a separate process and take note of the database
-host, port etc.. along with the redis host, port etc...  If you can't be bothered with all this hassle, there is an 'umbrella project' at
-https://github.com/ministryofjustice/et-full-system which pulls everything together - you can always run that and if you want to just use the admin
-use it from there - or if you want to host your own admin, just setup the environment variables to point to the same database.  You can
-use 'docker ps' to find out what ports are being forwarded from different services - look for the 'api' service.
+host, port etc.. along with the redis host, port etc...  OR a much easier method is to run within the et_full_system (see below)  - or if you want to host your own admin, just setup the environment variables to point to the same database.  
 
 See 'Important Environment Variables' below for a list of all the environment variables that you can change (irrespective of if you use docker or not)
 
-### Developing And Testing Using Docker
+### Developing And Testing Using The et_full_system gem
 
-#### Initial Setup (Run once)
+Please refer to https://github.com/hmcts/et_full_system_gem for instructions on general use and starting an environment.
+Once you have an environment running, read on below ...
 
-```
-    ./bin/dev/docker ./bin/setup
-```
+#### Developing Locally In Full System
 
-#### Running a server
-
-```
-
-./bin/dev/docker-server
+The easiest way to develop is to use the full system to provide everything that you need (database, redis, API etc..)
+and use a special command to redirect the full system admin URL to your local machine.
+The command to redirect to your local machine on port 3000 is (note you can use any free port) :-
 
 ```
-
-which will run a server on port 3000
-
-or if port 3000 is in use or you just want to use a different port
-
+et_full_system docker local_admin 3000
 ```
 
-PORT=3200 ./bin/dev/docker-server
+Then, in this project directory run
 
 ```
+et_full_system docker admin_env > .env
+```
 
-which will run a server on port 3200
+which will setup all environment variables to the correct values to work in the full system environment.
 
-#### Running commands on the docker box
-
-If you want to connect to the same machine to run other commands whilst the server is running :-
-
+then run
 
 ```
 
-./bin/dev/docker-exec bash
+rails s
 
 ```
 
-which will give you a bash session
+which will run the web server.  The url is
 
-or you can run other commands - for example
-
-```
-
-./bin/dev/docker-exec bundle exec rails c
-
-```
+http://admin.et.127.0.0.1.nip.io:3100
 
 
-will give you a rails console
-
-
-### Developing And Testing Without Docker
+### Developing And Testing Without Et Full System Gem
 
 This is just a rails app, so if you want to manage the dependencies etc.. yourself and
 setup your own database etc.. Just go about things in the normal way, but remembering these pointers
