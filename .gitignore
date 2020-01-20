@@ -24,4 +24,5 @@
 .idea
 /public/assets
 **/.DS_Store
-
+.env
+.env.local
