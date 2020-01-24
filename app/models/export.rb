@@ -6,4 +6,37 @@ class Export < ApplicationRecord
   has_many :events, class_name: 'ExportEvent'
 
   scope :ccd, -> { joins(:external_system).where('external_systems.reference LIKE \'ccd_%\'') }
+
+  def state
+    return 'complete' if events.complete.first.present?
+    key_event&.state || 'created'
+  end
+
+  def external_data
+    return {} if key_event.nil?
+    key_event.data['external_data']
+  end
+
+  def percent_complete
+    return 100 if events.complete.first
+    key_event&.percent_complete || 0
+  end
+
+  def message
+    key_event&.message || ''
+  end
+
+  private
+
+  def key_event
+    @key_event ||= begin
+                     complete = events.complete.last
+                     return complete if complete
+                     failed = events.failed.last
+                     return failed if failed
+                     erroring = events.erroring.last
+                     return erroring if erroring
+                     events.last
+                   end
+  end
 end
