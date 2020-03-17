@@ -68,5 +68,9 @@ gem 'pundit', '~> 2.0'
 gem 'httparty', '~> 0.17'
 gem 'dotenv-rails', '~> 2.7'
 
+
+gem 'et_azure_insights', '0.2.12', git: 'https://github.com/hmcts/et-azure-insights.git', tag: 'v0.2.12'
+gem 'application_insights', git: 'https://github.com/microsoft/ApplicationInsights-Ruby.git', ref: '5db6b4'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

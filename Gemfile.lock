@@ -1,4 +1,19 @@
 GIT
+  remote: https://github.com/hmcts/et-azure-insights.git
+  revision: b2d677431b449062c6f7cb8a0cae6b28c6f76d65
+  tag: v0.2.12
+  specs:
+    et_azure_insights (0.2.12)
+      application_insights (~> 0.5.7)
+
+GIT
+  remote: https://github.com/microsoft/ApplicationInsights-Ruby.git
+  revision: 5db6b4ad65262d23f26b678143a4a1fd7939e5c2
+  ref: 5db6b4
+  specs:
+    application_insights (0.5.7)
+
+GIT
   remote: https://github.com/ministryofjustice/azure_env_secrets.git
   revision: b72195789c350839d8a7f492eb2938c5101d5400
   tag: v0.1.3
@@ -323,12 +338,14 @@ DEPENDENCIES
   active_admin_import (~> 4.1)
   activeadmin (~> 2.0)
   activeadmin_addons (~> 1.4)
+  application_insights!
   azure-storage (~> 0.15.0.preview)
   azure_env_secrets!
   byebug
   coffee-rails (~> 5.0)
   devise (~> 4.7)
   dotenv-rails (~> 2.7)
+  et_azure_insights (= 0.2.12)!
   httparty (~> 0.17)
   iodine (~> 0.7.34)
   jbuilder (~> 2.5)
