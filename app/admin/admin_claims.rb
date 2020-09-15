@@ -43,7 +43,11 @@ ActiveAdmin.register Claim, as: 'Claims' do
     end
     column :files do |c|
       c.uploaded_files.user_only.map do |f|
-        link_to("<span class='claim-file-icon #{f.filename.split('.').last}'></span>".html_safe, rails_blob_path(f.file, disposition: 'attachment'))
+        if f.file.attached?
+          link_to("<span class='claim-file-icon #{f.filename.split('.').last}'></span>".html_safe, rails_blob_path(f.file, disposition: 'attachment'))
+        else
+          "<span class='claim-file-icon problem'></span>".html_safe
+        end
       end.join('').html_safe
     end
     column :ccd_state do |c|
@@ -106,6 +110,20 @@ ActiveAdmin.register Claim, as: 'Claims' do
       table_for claim.secondary_representatives do
         column(:id) { |r| auto_link r, r.id }
         column(:name)
+      end
+    end
+
+    panel('Events') do
+      table_for claim.events.order(id: :asc) do
+        column(:id) { |r| auto_link r, r.id }
+        column(:name)
+        column(:data)
+      end
+    end
+
+    panel('Commands') do
+      table_for claim.commands do
+        column(:id) { |r| auto_link r, r.id }
       end
     end
 

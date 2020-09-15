@@ -8,6 +8,8 @@ class Claim < ApplicationRecord
   has_many :secondary_respondents, through: :claim_respondents, class_name: 'Respondent', source: :respondent
   has_many :secondary_representatives, through: :claim_representatives, class_name: 'Representative', source: :representative
   has_many :uploaded_files, through: :claim_uploaded_files
+  has_many :events, as: :attached_to
+  has_many :commands, as: :root_object
   belongs_to :primary_claimant, class_name: 'Claimant'
   belongs_to :primary_respondent, class_name: 'Respondent', optional: true
   belongs_to :primary_representative, class_name: 'Representative', optional: true
