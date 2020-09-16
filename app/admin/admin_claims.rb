@@ -20,7 +20,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
   remove_filter :discrimination_claims, :pay_claims, :desired_outcomes, :other_claim_details
   remove_filter :claim_details, :other_outcome, :send_claim_to_whistleblowing_entity
   remove_filter :miscellaneous_information, :is_unfair_dismissal, :primary_claimant, :primary_respondent
-  remove_filter :exports
+  remove_filter :exports, :commands, :events
   filter :primary_claimant_first_name_cont, label: "Primary claimant first name"
   filter :primary_claimant_last_name_cont, label: "Primary claimant last name"
   filter :primary_respondent_name_or_primary_respondent_contact_cont, label: 'Primary Respondent Name'
@@ -96,7 +96,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
     panel('Files') do
       table_for claim.uploaded_files do
         column(:id) { |r| auto_link r, r.id }
-        column(:filename) { |f| link_to(f.filename, rails_blob_path(f.file, disposition: 'attachment')) }
+        column(:filename) { |f| link_to(f.filename, rails_blob_path(f.file, disposition: 'attachment')) if f.file.attached? }
       end
     end
     panel('Secondary Claimants') do
