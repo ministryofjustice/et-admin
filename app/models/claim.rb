@@ -14,7 +14,7 @@ class Claim < ApplicationRecord
   belongs_to :primary_respondent, class_name: 'Respondent', optional: true
   belongs_to :primary_representative, class_name: 'Representative', optional: true
   belongs_to :office, foreign_key: :office_code, primary_key: :code
-  has_many :exports, as: :resource
+  has_many :exports, -> { order(id: :desc) }, as: :resource
 
   scope :not_exported, -> { joins("LEFT JOIN \"exports\" ON \"exports\".\"resource_id\" = \"claims\".\"id\" AND \"exports\".\"resource_type\" = 'Claim'").where(exports: {id: nil}) }
   scope :not_exported_to_ccd, -> { joins("LEFT OUTER JOIN \"exports\" ON \"exports\".\"resource_id\" = \"claims\".\"id\" AND \"exports\".\"resource_type\" = 'Claim' LEFT OUTER JOIN \"external_systems\" ON \"exports\".\"external_system_id\" = \"external_systems\".\"id\" AND \"external_systems\".\"reference\" ~ 'ccd'").where(external_systems: {id: nil}) }
@@ -31,7 +31,7 @@ class Claim < ApplicationRecord
   end
 
   def last_ccd_export
-    @last__ccd_export ||= exports.ccd.last
+    @last__ccd_export ||= exports.ccd.first
   end
 
   def as_json(options = {})

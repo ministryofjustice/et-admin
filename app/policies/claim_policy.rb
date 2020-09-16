@@ -24,4 +24,8 @@ class ClaimPolicy < ApplicationPolicy
   def export?
     user.is_admin? || user.permission_names.include?('create_exports')
   end
+
+  def repair?
+    user.is_admin? || user.permission_names.include?('repair_claims')
+  end
 end

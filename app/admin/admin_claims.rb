@@ -1,16 +1,16 @@
 ActiveAdmin.register Claim, as: 'Claims' do
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+  # See permitted parameters documentation:
+  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
+  #
+  # permit_params :list, :of, :attributes, :on, :model
+  #
+  # or
+  #
+  # permit_params do
+  #   permitted = [:permitted, :attributes]
+  #   permitted << :other if params[:action] == 'create' && current_user.admin?
+  #   permitted
+  # end
 
   preserve_default_filters!
   remove_filter :claim_claimants, :claim_respondents, :claim_representatives, :claim_uploaded_files
@@ -25,7 +25,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
   filter :primary_claimant_last_name_cont, label: "Primary claimant last name"
   filter :primary_respondent_name_or_primary_respondent_contact_cont, label: 'Primary Respondent Name'
 
-  includes :secondary_claimants, :primary_claimant, :exports
+  includes :secondary_claimants, :primary_claimant, :secondary_respondents, :primary_respondent, :exports, :office, uploaded_files: [:file_blob], exports: [:external_system, :events]
 
   index do
     selectable_column
@@ -42,7 +42,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
       c.claimant_count == 1 ? 'Single' : 'Multiple'
     end
     column :files do |c|
-      c.uploaded_files.user_only.map do |f|
+      c.uploaded_files.select {|u| u.filename =~ /\.pdf|\.csv|\.rtf/}.map do |f|
         if f.file.attached?
           link_to("<span class='claim-file-icon #{f.filename.split('.').last}'></span>".html_safe, rails_blob_path(f.file, disposition: 'attachment'))
         else
@@ -51,7 +51,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
       end.join('').html_safe
     end
     column :ccd_state do |c|
-      export = c.exports.ccd.last
+      export = c.exports.detect { |e| e.external_system.reference.include?('ccd') }
       next '' if export.nil?
       str = export.state
       count = c.claimant_count
@@ -67,7 +67,16 @@ ActiveAdmin.register Claim, as: 'Claims' do
       str = "#{str} (#{count})" if count > 1
       "<a href='#{admin_export_url(export.id)}'>#{str}</a> (<a target='_blank' href='#{ENV.fetch('CCD_UI_BASE_URL', '')}/#{export.external_data['case_type_id']}/#{export.external_data['case_id']}'>#{export.external_system.name} - #{export.external_data['case_reference']}</a>)".html_safe
     end
-    actions
+    actions do |claim|
+      options = {
+        method: :post,
+        remote:true,
+        class: "member_link",
+        "data-action": 'repair',
+        "data-confirm": 'This action may generate duplicates if the claim does not need repairing. Are you sure ?'
+      }
+      item "Repair", repair_admin_claim_path(claim.id), options if authorized?(:repair, :claim)
+    end
   end
 
   form do |f|
@@ -135,7 +144,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
   scope :not_exported_to_ccd
 
   batch_action :export,
-               form: -> { { external_system_id: ExternalSystem.pluck(:name, :id) } },
+               form: -> { {external_system_id: ExternalSystem.pluck(:name, :id)} },
                if: ->(_user) { authorized? :create, :export } do |ids, inputs|
     response = Admin::ExportClaimsService.call(ids.map(&:to_i), inputs['external_system_id'].to_i)
     if response.errors.present?
@@ -149,10 +158,10 @@ ActiveAdmin.register Claim, as: 'Claims' do
               only: :show,
               if: ->() { authorized? :create, :export } do
     options = {
-      :class         => "active-admin-export-resource",
-      "data-action"  => 'export',
+      :class => "active-admin-export-resource",
+      "data-action" => 'export',
       "data-confirm" => 'Are you sure ?',
-      "data-inputs"  => { external_system_id: ExternalSystem.pluck(:name, :id) }.to_json,
+      "data-inputs" => {external_system_id: ExternalSystem.pluck(:name, :id)}.to_json,
       "data-resource-id" => resource.id,
       "data-resource-type" => resource.class
     }
@@ -170,5 +179,11 @@ ActiveAdmin.register Claim, as: 'Claims' do
     end
   end
 
-
+  member_action :repair, method: :post, respond_to: :js do
+    if Admin::RepairClaimService.call(params[:id].to_i).valid?
+      render js: "ActiveAdmin.ModalDialog('Claim submitted for repair - it should be exported within 15 minutes', [], function() {});"
+    else
+      render js: "ActiveAdmin.ModalDialog('Claim failed to repair', [], function() {});"
+    end
+  end
 end
