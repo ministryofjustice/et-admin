@@ -2,10 +2,9 @@ ActiveAdmin.register Admin::Role, as: 'Role' do
   permit_params :name, :is_admin, permission_ids: []
 
   index do
-    selectable_column
-    id_column
-    column :name
+    column(:name) { |role|  link_to(role.name, admin_role_path(id: role.id))}
     column :is_admin
+    column(:user_names) { |role| role.users.map(&:name).join(', ') }
   end
 
   filter :is_admin
@@ -15,8 +14,14 @@ ActiveAdmin.register Admin::Role, as: 'Role' do
     attributes_table do
       row :name
       row :is_admin
+      row(:user_names) do |r|
+        r.users.each do |user|
+          div "#{user.name} (#{user.department})"
+        end
+        nil
+      end
       row(:permissions) do |r|
-        r.permissions.map do |p|
+        r.permissions.each do |p|
           div p.name
         end
         nil
