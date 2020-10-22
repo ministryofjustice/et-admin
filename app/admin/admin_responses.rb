@@ -71,7 +71,7 @@ ActiveAdmin.register Response, as: 'Responses' do
   filter :created_at
   filter :respondent_name_cont, label: 'Respondent Name'
   filter :representative_name_cont, label: 'Representative Name'
-  filter :reference_starts_with, label: 'Office', as: :select, collection: proc { Office.all.map {|office| [office.name, office.id]} }
+  filter :reference_starts_with, label: 'Office', as: :select, collection: proc { Office.all.map {|office| [office.name, number_with_precision(office.code, significant: true, precision: 2)]} }
   scope :all, default: true
   scope :not_exported
   scope :not_exported_to_ccd
