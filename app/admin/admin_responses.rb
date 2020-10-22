@@ -66,7 +66,7 @@ ActiveAdmin.register Response, as: 'Responses' do
   remove_filter :agree_with_claimant_pension_benefits, :disagree_claimant_pension_benefits_reason
   remove_filter :defend_claim, :defend_claim_facts, :updated_at, :pdf_template_reference, :email_template_reference
 
-  filter :reference
+  filter :reference_cont, label: 'Reference'
   filter :case_number
   filter :created_at
   filter :respondent_name_cont, label: 'Respondent Name'
