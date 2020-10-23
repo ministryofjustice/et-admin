@@ -60,7 +60,7 @@ ActiveAdmin.register Admin::User, as: 'User' do
   filter :sign_in_count
   filter :created_at
   filter :roles
-  filter :department, as: :select, collection: Admin::User.pluck(:department).uniq
+  filter :department, as: :select, collection: proc { Admin::User.pluck(:department).uniq }
 
   show do |user|
     attributes_table do
