@@ -44,9 +44,11 @@ ActiveAdmin.register Admin::User, as: 'User' do
     selectable_column
     id_column
     column :name
-    column :username
     column :email
     column :department
+    column :roles do |u|
+      u.roles
+    end
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -57,6 +59,8 @@ ActiveAdmin.register Admin::User, as: 'User' do
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
+  filter :roles
+  filter :department, as: :select, collection: Admin::User.pluck(:department).uniq
 
   show do |user|
     attributes_table do
