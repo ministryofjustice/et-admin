@@ -125,6 +125,7 @@ ActiveAdmin.register Claim, as: 'Claims' do
     panel('Events') do
       table_for claim.events.order(id: :asc) do
         column(:id) { |r| auto_link r, r.id }
+        column(:created_at)
         column(:name)
         column(:data)
       end

@@ -28,4 +28,8 @@ class UploadedFilePolicy < ApplicationPolicy
   def export_ccd_multiples?
     user.is_admin?
   end
+
+  def delete_file_from_storage?
+    user.is_admin?
+  end
 end

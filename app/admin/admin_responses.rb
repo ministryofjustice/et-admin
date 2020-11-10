@@ -31,7 +31,16 @@ ActiveAdmin.register Response, as: 'Responses' do
     end
     column :created_at
 
-    actions
+    actions do |response|
+      options = {
+        method: :post,
+        remote:true,
+        class: "member_link",
+        "data-action": 'repair',
+        "data-confirm": 'This action may generate duplicates if the response does not need repairing. Are you sure ?'
+      }
+      item "Repair", repair_admin_response_path(response.id), options if authorized?(:repair, :response)
+    end
   end
 
   show do |response|
@@ -42,6 +51,15 @@ ActiveAdmin.register Response, as: 'Responses' do
       table_for response.uploaded_files do
         column(:id) { |r| auto_link r, r.id }
         column(:filename)
+      end
+    end
+
+    panel('Events') do
+      table_for response.events.order(id: :asc) do
+        column(:id) { |r| auto_link r, r.id }
+        column(:created_at)
+        column(:name)
+        column(:data)
       end
     end
 
@@ -83,6 +101,14 @@ ActiveAdmin.register Response, as: 'Responses' do
       redirect_to admin_claims_path, alert: "An error occured exporting your responses - #{response.errors.full_messages.join('<br/>')}"
     else
       redirect_to admin_responses_path, notice: 'Responses queued for export'
+    end
+  end
+
+  member_action :repair, method: :post, respond_to: :js do
+    if Admin::RepairResponseService.call(params[:id].to_i).valid?
+      render js: "ActiveAdmin.ModalDialog('Response submitted for repair - it should be exported within 30 minutes', [], function() {});"
+    else
+      render js: "ActiveAdmin.ModalDialog('Response failed to repair', [], function() {});"
     end
   end
 

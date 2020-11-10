@@ -20,4 +20,8 @@ class ResponsePolicy < ApplicationPolicy
   def destroy
     user.is_admin? || user.permission_names.include?('delete_responses')
   end
+
+  def repair?
+    user.is_admin? || user.permission_names.include?('repair_responses')
+  end
 end
