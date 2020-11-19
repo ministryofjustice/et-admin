@@ -89,7 +89,10 @@ ActiveAdmin.register Admin::User, as: 'User' do
       f.input :name
       f.input :email
       f.input :username
-      f.input :department
+      f.input :department,
+              as: :select,
+              input_html: { class: 'default-select select-single-tag' },
+              collection: Admin::User.select('department').order(department: :asc).distinct.map(&:department)
       f.input :password
       f.input :password_confirmation
       if authorized?(:index, Admin::Role)
