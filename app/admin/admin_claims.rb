@@ -21,11 +21,11 @@ ActiveAdmin.register Claim, as: 'Claims' do
   remove_filter :claim_details, :other_outcome, :send_claim_to_whistleblowing_entity
   remove_filter :miscellaneous_information, :is_unfair_dismissal, :primary_claimant, :primary_respondent
   remove_filter :exports, :commands, :events, :pdf_template_reference, :email_template_reference
-  remove_filter :confirmation_email_recipients, :time_zone
+  remove_filter :confirmation_email_recipients, :time_zone, :office
   filter :primary_claimant_first_name_cont, label: "Primary claimant first name"
   filter :primary_claimant_last_name_cont, label: "Primary claimant last name"
   filter :primary_respondent_name_or_primary_respondent_contact_cont, label: 'Primary Respondent Name'
-
+  filter :office_code_equals, as: :select, label: 'Office', collection: proc { Office.all.map {|o| [o.name, o.code]} }
   includes :secondary_claimants, :primary_claimant, :secondary_respondents, :primary_respondent, :exports, :office, uploaded_files: [:file_blob], exports: [:external_system, :events]
 
   index do
