@@ -11,7 +11,7 @@ ActiveAdmin.register UploadedFile, as: 'UploadedFiles' do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  permit_params :file, :filename
+  permit_params :file, :filename, :import_file_url, :import_from_key
 
   preserve_default_filters!
   remove_filter :file_attachment, :file_blob, :checksum
@@ -19,6 +19,8 @@ ActiveAdmin.register UploadedFile, as: 'UploadedFiles' do
   show do
     attributes_table title: 'File Details' do
       row(:filename) { |f| link_to(f.filename, rails_blob_path(f.file, disposition: 'attachment')) if f.file.attached? }
+      row :import_file_url
+      row :import_from_key
       row :created_at
       row :updated_at
     end
@@ -35,6 +37,8 @@ ActiveAdmin.register UploadedFile, as: 'UploadedFiles' do
   form do |f|
     f.inputs do
       f.input :filename
+      f.input :import_file_url
+      f.input :import_from_key
       f.input :file, as: :file
     end
     f.actions
