@@ -28,7 +28,7 @@ jobs:
 - job: BuildAndPushImage
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
   pool:
-    name: hmcts-pet  # name of the pool to run this job in
+    vmImage: 'Ubuntu-16.04'
   steps:
 
   - bash: |
@@ -120,7 +120,7 @@ jobs:
       eq(variables['Build.Reason'], 'Manual')
     )
   pool:
-    name: hmcts-pet  # name of the pool to run this job in
+    vmImage: 'Ubuntu-16.04'
   steps:
 
   - bash: |
