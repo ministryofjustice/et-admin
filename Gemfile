@@ -12,7 +12,7 @@ gem 'rails', '6.1.2.1'
 gem 'azure_env_secrets', git: 'https://github.com/ministryofjustice/azure_env_secrets.git', tag: 'v0.1.3'
 # Use postgres as the database for Active Record
 gem 'pg', '~> 1.0'
-gem 'iodine', '~> 0.7.43'
+gem 'iodine', '~> 0.7.44'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
